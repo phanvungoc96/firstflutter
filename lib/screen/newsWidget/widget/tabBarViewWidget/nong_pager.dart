@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_app/networks/networks_request.dart';
 
 import '../../../../models/News.dart';
+import '../../../../widgets/news_card.dart';
 import '../audio_news.dart';
-import '../news_card.dart';
 
 class NongPager extends StatefulWidget {
   const NongPager({Key? key}) : super(key: key);
@@ -31,7 +31,7 @@ class _NongPagerState extends State<NongPager> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(color: Colors.grey),
+      decoration: const BoxDecoration(color: Color.fromRGBO(225, 224, 229, 1)),
       child: SingleChildScrollView(
         child: Column(
           children: <Widget>[
