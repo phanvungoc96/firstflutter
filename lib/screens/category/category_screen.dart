@@ -12,6 +12,22 @@ import 'widget/read_mode.dart';
 class CategoryScreen extends StatefulWidget {
   final String title;
   const CategoryScreen({Key? key, required this.title}) : super(key: key);
+  Widget buildListTile(String title, IconData icon, tapHandler) {
+    return ListTile(
+      leading: Icon(
+        icon,
+        size: 26,
+      ),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontSize: 24,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+      onTap: tapHandler,
+    );
+  }
 
   @override
   State<CategoryScreen> createState() => _CategoryScreenState();
@@ -32,24 +48,25 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          backgroundColor: MyColor.lightGrey,
-          appBar: const HeaderCategory(),
-          body: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                const ReadMode(),
-                const SizedBox(height: 10),
-                TypeDisplayList(type, changeTypeDisplayList),
-                type == DisplayList.verticalList ? const CategoryVerticalList() : const CategoryGridTwo(),
-                const SizedBox(height: 10),
-                const HotNewChannel(),
-                const SizedBox(height: 10),
-                const ContactInfo()
-              ],
-            ),
-          )),
-    );
+    return Drawer(
+        width: MediaQuery.of(context).size.width,
+        backgroundColor: MyColor.lightGrey,
+        child: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              HeaderCategory(),
+              const ReadMode(),
+              const SizedBox(height: 10),
+              TypeDisplayList(type, changeTypeDisplayList),
+              type == DisplayList.verticalList
+                  ? const CategoryVerticalList()
+                  : const CategoryGridTwo(),
+              const SizedBox(height: 10),
+              const HotNewChannel(),
+              const SizedBox(height: 10),
+              const ContactInfo()
+            ],
+          ),
+        ));
   }
 }

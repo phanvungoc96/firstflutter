@@ -20,7 +20,27 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const News(),
+      initialRoute: '/',
+      // home: const News(),
+      routes: {
+        '/': (ctx) => TabsScreen(),
+        DetailPage.routeName: (ctx) => DetailPage(),
+      },
+      onGenerateRoute: (settings) {
+        print(settings.arguments);
+        return null;
+        // if (settings.name == '/meal-detail') {
+        //   return ...;
+        // } else if (settings.name == '/something-else') {
+        //   return ...;
+        // }
+        // return MaterialPageRoute(builder: (ctx) => CategoriesScreen(),);
+      },
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (ctx) => CategoryScreen(title: 'Category'),
+        );
+      },
     );
   }
 }
