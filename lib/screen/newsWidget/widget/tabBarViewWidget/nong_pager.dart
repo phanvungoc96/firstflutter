@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/models/news_model.dart';
-import 'package:my_app/screen/newsWidget/Data/nong_news_data.dart';
+import 'package:my_app/networks/networks_request.dart';
 
+import '../../../../models/News.dart';
 import '../audio_news.dart';
 import '../news_card.dart';
 
@@ -13,6 +13,21 @@ class NongPager extends StatefulWidget {
 }
 
 class _NongPagerState extends State<NongPager> {
+  List<NewsModels> _newsData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    NetWorksRequest.fetchNews('News').then((value) {
+      print(value);
+      setState(() {
+        _newsData = value;
+      });
+    }).catchError((e) {
+      print(e);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,18 +62,11 @@ class _NongPagerState extends State<NongPager> {
                     )),
               ),
             ),
-            NewsCard(
-              news: NewsModel(
-                  "Vụ Tịnh thất Bồng Lai: 5 bị cáo khai mồ côi, ông Lê Tùng Vân nói chờ được... lấy vợ",
-                  "https://static-images.vnncdn.net/files/publish/2022/7/20/tinh-that-bong-lai-11-306.jpg",
-                  "Tin tức",
-                  "1 giờ"),
-            ),
             const AudioNews(),
             const SizedBox(height: 4),
             Column(
               children: <Widget>[
-                ...dataNews
+                ..._newsData
                     .map((e) => Container(
                         margin: const EdgeInsets.only(bottom: 4),
                         child: NewsCard(news: e)))

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import './model.dart';
+
 import './bottomModal.dart';
+import '../../model.dart';
 
 class DetailPage extends StatefulWidget {
   final Item item;

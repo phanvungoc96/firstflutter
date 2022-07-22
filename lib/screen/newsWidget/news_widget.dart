@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/screen/newsWidget/widget/tabBarViewWidget/theo_doi_pager.dart';
+import 'package:my_app/screens/search/search.dart';
 
 import './widget/tabBarViewWidget/nong_pager.dart';
 
@@ -77,7 +78,10 @@ class News extends StatelessWidget {
           leading: const Icon(Icons.menu),
           actions: <Widget>[
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Search()));
+              },
               icon: const Icon(Icons.search),
             ),
             IconButton(onPressed: () {}, icon: const Icon(Icons.person))
