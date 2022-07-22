@@ -10,8 +10,7 @@ class News extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: DefaultTabController(
+    return DefaultTabController(
       length: 17,
       child: Scaffold(
         appBar: PreferredSize(
@@ -89,7 +88,8 @@ class News extends StatelessWidget {
               IconButton(onPressed: () {}, icon: const Icon(Icons.person))
             ],
             flexibleSpace: Container(
-              decoration: const BoxDecoration(gradient: LinearGradient(colors: MyColor.colorHeader)),
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(colors: MyColor.colorHeader)),
             ),
           ),
         ),
@@ -115,7 +115,7 @@ class News extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }
 
