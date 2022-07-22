@@ -43,10 +43,7 @@ class LoginType extends StatelessWidget {
               margin: const EdgeInsets.only(bottom: 12),
               child: Text(
                 'Đăng nhập để theo dõi'.toUpperCase(),
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.grey[500]),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey[500]),
               ),
             ),
             TextButton(
@@ -70,8 +67,7 @@ class LoginType extends StatelessWidget {
                       ),
                       Text(
                         'Đăng nhập qua zalo (miễn phí)',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w700),
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                       )
                     ],
                   ),
@@ -97,8 +93,7 @@ class LoginType extends StatelessWidget {
                       ),
                       Text(
                         'Đăng nhập bằng SMS',
-                        style: TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w700),
+                        style: TextStyle(color: Colors.black, fontWeight: FontWeight.w700),
                       )
                     ],
                   ),
@@ -124,8 +119,7 @@ class LoginType extends StatelessWidget {
                       ),
                       Text(
                         'Đăng nhập bằng Apple',
-                        style: TextStyle(
-                            color: Colors.white, fontWeight: FontWeight.w700),
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
                       )
                     ],
                   ),

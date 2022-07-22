@@ -10,8 +10,7 @@ import 'widget/header_category.dart';
 import 'widget/read_mode.dart';
 
 class CategoryScreen extends StatefulWidget {
-  final String title;
-  const CategoryScreen({Key? key, required this.title}) : super(key: key);
+  const CategoryScreen({Key? key}) : super(key: key);
   Widget buildListTile(String title, IconData icon, tapHandler) {
     return ListTile(
       leading: Icon(
@@ -48,19 +47,16 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-        width: MediaQuery.of(context).size.width,
+    return Scaffold(
+        appBar: HeaderCategory(),
         backgroundColor: MyColor.lightGrey,
-        child: SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
-              HeaderCategory(),
               const ReadMode(),
               const SizedBox(height: 10),
               TypeDisplayList(type, changeTypeDisplayList),
-              type == DisplayList.verticalList
-                  ? const CategoryVerticalList()
-                  : const CategoryGridTwo(),
+              type == DisplayList.verticalList ? const CategoryVerticalList() : const CategoryGridTwo(),
               const SizedBox(height: 10),
               const HotNewChannel(),
               const SizedBox(height: 10),

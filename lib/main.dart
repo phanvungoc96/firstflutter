@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/screens/category/category_screen.dart';
-
-import 'screens/newsWidget/news_widget.dart';
-
-import './detail.dart';
+import 'package:my_app/screens/detail/detail.dart';
+import 'package:my_app/screens/tabScreens.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,7 +36,7 @@ class MyApp extends StatelessWidget {
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (ctx) => CategoryScreen(title: 'Category'),
+          builder: (ctx) => CategoryScreen(),
         );
       },
     );

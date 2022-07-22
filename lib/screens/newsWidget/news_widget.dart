@@ -14,7 +14,6 @@ class News extends StatelessWidget {
         child: DefaultTabController(
       length: 17,
       child: Scaffold(
-        drawer: CategoryScreen(title: "Chuyên mục"),
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBar(
@@ -78,6 +77,10 @@ class News extends StatelessWidget {
               ],
             ),
             elevation: 0,
+            leading: IconButton(
+              onPressed: () => Scaffold.of(context).openDrawer(),
+              icon: const Icon(Icons.menu),
+            ),
             actions: <Widget>[
               IconButton(
                 onPressed: () {},

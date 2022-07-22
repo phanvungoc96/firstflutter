@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:my_app/models/category.dart';
 import 'package:my_app/utils/dum_data.dart';
@@ -29,6 +30,7 @@ class CategoryGridTwo extends StatelessWidget {
 
   Widget renderItem(Category item) {
     return ImageHelper.instance().loadCacheImg(120, 120, item.urlImage, item, "Category Screen", buildItem);
+    // return Image(image: CachedNetworkImageProvider((item.urlImage)));
   }
 
   Widget renderItemAdd() {
@@ -46,20 +48,35 @@ class CategoryGridTwo extends StatelessWidget {
     );
   }
 
-  Container buildItem(double width, double height, ImageProvider imageProvider, Object itemData) {
+  Widget buildItem(double width, double height, ImageProvider imageProvider, Object itemData) {
     Category item = itemData as Category;
+    //c1 use Stack
+    // return Stack(children: [
+    //   Positioned.fill(
+    //     child: ClipRRect(
+    //       borderRadius: BorderRadius.circular(5),
+    //       child: Image(
+    //         image: imageProvider,
+    //         filterQuality: FilterQuality.low,
+    //         fit: BoxFit.cover,
+    //       ),
+    //     ),
+    //   ),
+    //   Center(child: Text(item.title).title(Colors.white))
+    // ]);
+    // c2
     return Container(
       height: width,
       width: height,
       decoration: BoxDecoration(
           borderRadius: MyShape.radius_5,
           image: DecorationImage(
+            filterQuality: FilterQuality.low,
             image: imageProvider,
             fit: BoxFit.cover,
-            colorFilter: const ColorFilter.srgbToLinearGamma(),
           )),
       child: Center(
-        child: Text(item.title).medium(Colors.white),
+        child: Text(item.title).title(Colors.white),
       ),
     );
   }
