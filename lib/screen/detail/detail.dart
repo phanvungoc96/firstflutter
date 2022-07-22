@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import './model.dart';
+import '../../models/model.dart';
 import './bottomModal.dart';
 
 class DetailPage extends StatefulWidget {
+  static const routeName = '/detail';
   final Item item;
   const DetailPage(
       {Key? key,

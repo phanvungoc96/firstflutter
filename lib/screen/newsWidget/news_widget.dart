@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/model/category.dart';
+import 'package:my_app/screen/category/category_screen.dart';
 import 'package:my_app/screen/newsWidget/widget/tabBarViewWidget/theo_doi_pager.dart';
 
 import './widget/tabBarViewWidget/nong_pager.dart';
@@ -8,10 +10,13 @@ class News extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
+    return Container(
         child: DefaultTabController(
       length: 17,
       child: Scaffold(
+        drawer: CategoryScreen(
+          title: 'Category',
+        ),
         appBar: AppBar(
           toolbarHeight: MediaQuery.of(context).size.height / 15,
           title: const TabBar(
@@ -74,7 +79,6 @@ class News extends StatelessWidget {
             ],
           ),
           elevation: 0,
-          leading: const Icon(Icons.menu),
           actions: <Widget>[
             IconButton(
               onPressed: () {},
