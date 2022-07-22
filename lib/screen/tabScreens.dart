@@ -33,30 +33,43 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: CategoryScreen(
-        title: 'Category',
-      ),
-      body: _pages[_selectedPageIndex]['page'] as Widget,
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: _selectPage,
-        backgroundColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.white,
-        selectedItemColor: Theme.of(context).errorColor,
-        currentIndex: _selectedPageIndex,
-        type: BottomNavigationBarType.fixed,
-        items: [
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.newspaper),
-            label: 'Tin tức',
-          ),
-          BottomNavigationBarItem(
-            backgroundColor: Theme.of(context).primaryColor,
-            icon: Icon(Icons.star),
-            label: 'Favorites',
-          ),
-        ],
-      ),
-    );
+        resizeToAvoidBottomInset: false,
+        drawer: CategoryScreen(
+          title: 'Category',
+        ),
+        body: _pages[_selectedPageIndex]['page'] as Widget,
+        bottomNavigationBar: Container(
+            decoration: const BoxDecoration(
+                gradient: LinearGradient(colors: [
+              Color.fromRGBO(0, 144, 153, 1),
+              Color.fromRGBO(0, 128, 163, 1),
+              Color.fromRGBO(0, 125, 163, 1),
+              Color.fromRGBO(0, 106, 154, 1),
+              Color.fromRGBO(0, 93, 152, 1),
+            ])),
+            height: 68,
+            child: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
+              child: BottomNavigationBar(
+                onTap: _selectPage,
+                backgroundColor: Colors.transparent,
+                unselectedItemColor: Theme.of(context).primaryColor,
+                selectedItemColor: Colors.yellow,
+                currentIndex: _selectedPageIndex,
+                iconSize: 20,
+                items: const [
+                  BottomNavigationBarItem(
+                    backgroundColor: Colors.transparent,
+                    icon: Icon(Icons.newspaper),
+                    label: 'Tin tức',
+                  ),
+                  BottomNavigationBarItem(
+                    backgroundColor: Colors.transparent,
+                    icon: Icon(Icons.star),
+                    label: 'Favorites',
+                  ),
+                ],
+              ),
+            )));
   }
 }
