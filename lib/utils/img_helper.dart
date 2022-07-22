@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/utils/logger.dart';
 import 'package:my_app/utils/extension.dart';
 
-import 'package:my_app/model/category.dart';
+import 'package:my_app/models/category.dart';
 import 'constants.dart';
 
 class ImageHelper {

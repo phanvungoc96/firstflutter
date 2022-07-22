@@ -19,8 +19,8 @@ class TypeDisplayList extends StatelessWidget {
           IconButton(
             onPressed: () => _changeTypeDisplayList(),
             icon: _type == DisplayList.verticalList
-                ? const Icon(Icons.format_list_bulleted_rounded)
-                : const Icon(Icons.grid_view),
+                ? const Icon(Icons.format_list_bulleted_rounded, color: MyColor.grey)
+                : const Icon(Icons.grid_view, color: MyColor.grey),
           )
         ],
       ),

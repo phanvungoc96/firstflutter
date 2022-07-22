@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/screen/category/category_screen.dart';
-import 'package:my_app/screen/tabScreens.dart';
-
-import 'screen/newsWidget/news_widget.dart';
-
-import './screen/detail/detail.dart';
+import 'package:my_app/screens/category/category_screen.dart';
+import 'package:my_app/screens/detail/detail.dart';
+import 'package:my_app/screens/tabScreens.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,59 +36,9 @@ class MyApp extends StatelessWidget {
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (ctx) => CategoryScreen(title: 'Category'),
+          builder: (ctx) => CategoryScreen(),
         );
       },
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      drawer: const CategoryScreen(
-        title: "",
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

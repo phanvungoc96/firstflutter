@@ -3,11 +3,10 @@
 import 'package:flutter/material.dart';
 
 class LoginType extends StatelessWidget {
-  final Function addTx;
   final titleController = TextEditingController();
   final amountController = TextEditingController();
 
-  LoginType(this.addTx, {Key? key}) : super(key: key);
+  LoginType({Key? key}) : super(key: key);
 
   void submitData() {
     final enteredTitle = titleController.text;
@@ -16,11 +15,6 @@ class LoginType extends StatelessWidget {
     if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
-
-    addTx(
-      enteredTitle,
-      enteredAmount,
-    );
   }
 
   @override

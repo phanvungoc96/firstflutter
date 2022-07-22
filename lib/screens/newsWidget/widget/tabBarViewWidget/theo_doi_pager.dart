@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/detail/bottomModal.dart';
 
 class TheoDoiPager extends StatelessWidget {
   const TheoDoiPager({Key? key}) : super(key: key);
+
+  void showModal(BuildContext ctx) {
+    showModalBottomSheet(
+      context: ctx,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: LoginType(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +70,13 @@ class TheoDoiPager extends StatelessWidget {
                 ),
               ),
             ),
-            child: const Text(
-              "Đăng nhập ngay",
-              style: TextStyle(fontSize: 12),
+            child: TextButton(
+              onPressed: () => showModal(context),
+              style: TextButton.styleFrom(padding: EdgeInsets.all(0)),
+              child: Text(
+                "Đăng nhập ngay",
+                style: TextStyle(fontSize: 14, color: Colors.white),
+              ),
             ),
           ),
         ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/utils/dum_data.dart';
 import 'package:my_app/utils/extension.dart';
-import '../../../model/new_channel.dart';
+import '../../../models/new_channel.dart';
 import '../../../utils/constants.dart';
 
 class HotNewChannel extends StatelessWidget {
