@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import './bottomModal.dart';
-import '../../model.dart';
+import '../../models/model.dart';
 
 class DetailPage extends StatefulWidget {
+  static const routeName = '/detail';
   final Item item;
   const DetailPage(
       {Key? key,
@@ -278,7 +279,7 @@ class _DetailPageState extends State<DetailPage> {
                                           ),
                                         ),
                                         Expanded(
-                                            child: Container(
+                                            child: SizedBox(
                                                 height: MediaQuery.of(context)
                                                         .size
                                                         .width /
