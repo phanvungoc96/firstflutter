@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/screen/category/widget/category_grid_two.dart';
-import 'package:my_app/screen/category/widget/category_vertical_list.dart';
-import 'package:my_app/screen/category/widget/type_display_list.dart';
-import 'package:my_app/screen/category/widget/contact_info.dart';
-import 'package:my_app/screen/category/widget/hot_new_channel.dart';
+import 'package:my_app/screens/category/widget/category_grid_two.dart';
+import 'package:my_app/screens/category/widget/category_vertical_list.dart';
+import 'package:my_app/screens/category/widget/type_display_list.dart';
+import 'package:my_app/screens/category/widget/contact_info.dart';
+import 'package:my_app/screens/category/widget/hot_new_channel.dart';
 import 'package:my_app/utils/enum.dart';
 import '../../utils/constants.dart';
 import 'widget/header_category.dart';

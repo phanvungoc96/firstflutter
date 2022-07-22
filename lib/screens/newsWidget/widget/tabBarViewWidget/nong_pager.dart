@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/models/news_model.dart';
-import 'package:my_app/screen/newsWidget/Data/nong_news_data.dart';
+import 'package:my_app/screens/newsWidget/Data/nong_news_data.dart';
 
 import '../audio_news.dart';
 import '../news_card.dart';

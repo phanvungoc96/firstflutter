@@ -1,5 +1,5 @@
-import '../model/new_channel.dart';
-import '../model/category.dart';
+import '../models/new_channel.dart';
+import '../models/category.dart';
 
 const List<Category> categoryList = [
   Category("Theo dõi", "https://photo-baomoi.bmcdn.me/w700_r1/2022_07_21_94_43230828/aee9fd3f227dcb23926c.jpg"),

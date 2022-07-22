@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/screen/newsWidget/widget/nong_item.dart';
+import 'package:my_app/screens/newsWidget/widget/nong_item.dart';
 
 import '../Data/nong_news_data.dart';
 
