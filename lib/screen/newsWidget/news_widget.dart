@@ -14,9 +14,9 @@ class News extends StatelessWidget {
         child: DefaultTabController(
       length: 17,
       child: Scaffold(
-        drawer: CategoryScreen(
-          title: 'Category',
-        ),
+        // drawer: CategoryScreen(
+        //   title: 'Category',
+        // ),
         appBar: AppBar(
           toolbarHeight: MediaQuery.of(context).size.height / 15,
           title: const TabBar(
@@ -79,6 +79,10 @@ class News extends StatelessWidget {
             ],
           ),
           elevation: 0,
+          leading: IconButton(
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: const Icon(Icons.menu),
+          ),
           actions: <Widget>[
             IconButton(
               onPressed: () {},
