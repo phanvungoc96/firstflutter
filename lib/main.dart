@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/screens/category/category_screen.dart';
 import 'package:my_app/screens/detail/detail.dart';
 import 'package:my_app/screens/newsWidget/news_widget.dart';
+import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/search/search.dart';
 import 'package:my_app/screens/tabScreens.dart';
 
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
         '/': (ctx) => TabsScreen(),
         DetailPage.routeName: (ctx) => DetailPage(),
         News.routeName: (ctx) => News(),
-        Search.routeName: (ctx) => Search()
+        Search.routeName: (ctx) => Search(),
+        Profile.routeName: (ctx) => Profile()
       },
       onGenerateRoute: (settings) {
         print(settings.arguments);
