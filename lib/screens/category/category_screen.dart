@@ -56,7 +56,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
               const ReadMode(),
               const SizedBox(height: 10),
               TypeDisplayList(type, changeTypeDisplayList),
-              type == DisplayList.verticalList ? const CategoryVerticalList() : const CategoryGridTwo(),
+              type == DisplayList.verticalList
+                  ? const CategoryVerticalList()
+                  : const CategoryGridTwo(),
               const SizedBox(height: 10),
               const HotNewChannel(),
               const SizedBox(height: 10),
