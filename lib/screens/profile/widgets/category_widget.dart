@@ -49,6 +49,7 @@ class CategoryWidget extends StatelessWidget {
 
     return Container(
       padding: EdgeInsets.all(8),
+      color: Colors.white,
       child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

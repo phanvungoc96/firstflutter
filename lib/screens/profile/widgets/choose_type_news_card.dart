@@ -5,34 +5,37 @@ class ChooseTypeNewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15.0),
-      ),
-      elevation: 12,
-      color: Colors.white,
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Wrap(
-            spacing: 8,
-            runSpacing: 8,
-            direction: Axis.horizontal,
-            children: const <Widget>[
-              ItemType(
-                  title: 'Đã đánh dấu', iconData: Icons.ads_click_outlined),
-              ItemType(
-                title: 'Đang theo dõi',
-                iconData: Icons.check_circle_outline,
-              ),
-              ItemType(
-                title: 'Đọc online',
-                iconData: Icons.online_prediction_outlined,
-              ),
-              ItemType(
-                title: 'Đọc gần đây',
-                iconData: Icons.access_time_outlined,
-              ),
-            ]),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15.0),
+        ),
+        color: Colors.white,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              direction: Axis.horizontal,
+              children: const <Widget>[
+                ItemType(
+                    title: 'Đã đánh dấu', iconData: Icons.ads_click_outlined),
+                ItemType(
+                  title: 'Đang theo dõi',
+                  iconData: Icons.check_circle_outline,
+                ),
+                ItemType(
+                  title: 'Đọc online',
+                  iconData: Icons.online_prediction_outlined,
+                ),
+                ItemType(
+                  title: 'Đọc gần đây',
+                  iconData: Icons.access_time_outlined,
+                ),
+              ]),
+        ),
       ),
     );
   }
