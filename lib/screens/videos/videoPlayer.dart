@@ -3,32 +3,29 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
-class VideoPlayerScreen extends StatefulWidget {
-  const VideoPlayerScreen({super.key});
+class Video extends StatefulWidget {
+  final String url;
+  const Video({super.key, required this.url});
 
   @override
-  State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
+  State<Video> createState() => _VideoPlayerScreenState();
 }
 
-class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
+class _VideoPlayerScreenState extends State<Video> {
   late VideoPlayerController _controller;
-  late Future<void> _initializeVideoPlayerFuture;
 
   @override
   void initState() {
     super.initState();
-
-    // Create and store the VideoPlayerController. The VideoPlayerController
-    // offers several different constructors to play videos from assets, files,
-    // or the internet.
-    _controller = VideoPlayerController.network(
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
-    );
-
-    // Initialize the controller and store the Future for later use.
-    _initializeVideoPlayerFuture = _controller.initialize();
-
-    // Use the controller to loop the video.
+    _controller = VideoPlayerController.network(widget.url
+        // 'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4',
+        );
+    _controller.addListener(() {
+      setState(() {});
+    });
+    _controller.initialize().then((value) {
+      setState(() {});
+    });
     _controller.setLooping(true);
   }
 
@@ -40,53 +37,118 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     super.dispose();
   }
 
+  Widget renderItem(String title) {
+    return Container(
+        padding: EdgeInsets.all(12),
+        margin: EdgeInsets.only(bottom: 8),
+        color: Colors.white,
+        child: Column(
+          children: [
+            _controller.value.isInitialized
+                ? AspectRatio(
+                    aspectRatio: _controller.value.aspectRatio,
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(12),
+                          child: VideoPlayer(_controller),
+                        ),
+
+                        // ClosedCaption(text: 'asas'),
+                        // Here you can also add Overlay capacities
+                        // Row(
+                        //   // mainAxisAlignment: MainAxisAlignment.end,
+                        //   crossAxisAlignment: CrossAxisAlignment.center,
+                        //   children: [
+                        //     Expanded(
+                        //       child: VideoProgressIndicator(
+                        //         _controller,
+                        //         allowScrubbing: true,
+                        //         padding: EdgeInsets.all(3),
+                        //         colors: VideoProgressColors(
+                        //             playedColor: Theme.of(context).primaryColor),
+                        //       ),
+                        //     ),
+                        //     Container(
+                        //       margin: const EdgeInsets.only(left: 10, right: 10),
+                        //       child: ValueListenableBuilder(
+                        //         valueListenable: _controller,
+                        //         builder: (context, VideoPlayerValue value, child) {
+                        //           //Do Something with the value.
+                        //           return Text(
+                        //               "${value.position.inSeconds}:${_controller.value.duration.inSeconds}");
+                        //         },
+                        //       ),
+                        //     )
+                        //   ],
+                        // ),
+
+                        Visibility(
+                          visible: true,
+                          child: Container(
+                            color: Colors.transparent,
+                            alignment: Alignment.center,
+                            child: FlatButton(
+                              shape: CircleBorder(
+                                  side: BorderSide(color: Colors.white)),
+                              child: Icon(
+                                _controller.value.isPlaying
+                                    ? Icons.pause
+                                    : Icons.play_arrow,
+                                color: Colors.white,
+                              ),
+                              onPressed: () {
+                                // pause while video is playing, play while video is pausing
+                                setState(() {
+                                  _controller.value.isPlaying
+                                      ? _controller.pause()
+                                      : _controller.play();
+                                });
+
+                                // Auto dismiss overlay after 1 second
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  )
+                : SizedBox(
+                    height: 250,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+            Container(
+                margin: EdgeInsets.only(top: 8, bottom: 8),
+                child: Row(
+                    children: const [Icon(Icons.play_arrow), Text('3 gio')])),
+            Text(
+              'Chim bay tung troi Chim bay tung troi Chim bay tung troi Chim bay tung troi',
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            )
+          ],
+        ));
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Butterfly Video'),
-      ),
-      // Use a FutureBuilder to display a loading spinner while waiting for the
-      // VideoPlayerController to finish initializing.
-      body: FutureBuilder(
-        future: _initializeVideoPlayerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // If the VideoPlayerController has finished initialization, use
-            // the data it provides to limit the aspect ratio of the video.
-            return AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              // Use the VideoPlayer widget to display the video.
-              child: VideoPlayer(_controller),
-            );
-          } else {
-            // If the VideoPlayerController is still initializing, show a
-            // loading spinner.
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // Wrap the play or pause in a call to `setState`. This ensures the
-          // correct icon is shown.
-          setState(() {
-            // If the video is playing, pause it.
-            if (_controller.value.isPlaying) {
-              _controller.pause();
-            } else {
-              // If the video is paused, play it.
-              _controller.play();
-            }
-          });
-        },
-        // Display the correct icon depending on the state of the player.
-        child: Icon(
-          _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-        ),
-      ),
-    );
+    return Container(
+        color: Colors.grey[300],
+        child: ListView(children: <Widget>[
+          renderItem(
+            'Chim bay tung troi Chim bay tung troi Chim bay tung troi Chim bay tung troi',
+          ),
+          renderItem(
+            'Chim bay tung troi Chim bay tung troi Chim bay tung troi Chim bay tung troi',
+          ),
+          renderItem(
+            'Chim bay tung troi Chim bay tung troi Chim bay tung troi Chim bay tung troi',
+          ),
+          renderItem(
+            'Chim bay tung troi Chim bay tung troi Chim bay tung troi Chim bay tung troi',
+          )
+        ]));
   }
 }
