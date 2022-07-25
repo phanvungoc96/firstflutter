@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/trending/trending_screen.dart';
 
 import './newsWidget/news_widget.dart';
 import './detail/detail.dart';
@@ -22,7 +23,7 @@ class _TabsScreenState extends State<TabsScreen> {
       'title': 'Video',
     },
     {
-      'page': DetailPage(),
+      'page': TrendingScreen(),
       'title': 'Xu hướng',
     },
     {

@@ -28,7 +28,7 @@ extension TextExt on Text {
 
   //12
   Text small(Color color) {
-    return Text(data.toString(), style: GoogleFonts.lato(color: color, fontSize: 14));
+    return Text(data.toString(), style: GoogleFonts.lato(color: color, fontSize: 12));
   }
 
   Align smallCenterLeft(Color color) {

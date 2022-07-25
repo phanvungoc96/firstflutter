@@ -5,8 +5,8 @@ import 'package:my_app/screens/category/widget/type_display_list.dart';
 import 'package:my_app/screens/category/widget/contact_info.dart';
 import 'package:my_app/screens/category/widget/hot_new_channel.dart';
 import 'package:my_app/utils/enum.dart';
+import 'package:my_app/widgets/header/header.dart';
 import '../../utils/constants.dart';
-import 'widget/header_category.dart';
 import 'widget/read_mode.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -45,10 +45,23 @@ class _CategoryScreenState extends State<CategoryScreen> {
     });
   }
 
+  IconButton buildIconRight(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_forward),
+      tooltip: 'Arrow forward',
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: HeaderCategory(),
+        appBar: Header(
+          "Chuyên mục",
+          iconRights: [buildIconRight(context)],
+        ),
         backgroundColor: MyColor.lightGrey,
         body: SingleChildScrollView(
           child: Column(

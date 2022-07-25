@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/screens/category/category_screen.dart';
 import 'package:my_app/screens/detail/detail.dart';
 import 'package:my_app/screens/tabScreens.dart';
+import 'package:my_app/screens/trending/trending_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +10,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-  // This widget is the root of your application.
+  // This widgets is the root of your application.
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (ctx) => TabsScreen(),
         DetailPage.routeName: (ctx) => DetailPage(),
+        TrendingScreen.routeName: (ctx) => TrendingScreen(),
       },
       onGenerateRoute: (settings) {
         print(settings.arguments);
