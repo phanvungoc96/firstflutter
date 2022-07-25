@@ -3,15 +3,65 @@ import 'package:my_app/screens/profile/widgets/category_widget.dart';
 import 'package:my_app/screens/profile/widgets/choose_type_news_card.dart';
 import 'package:my_app/utils/constants.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
   static const routeName = '/profile';
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.grey, body: bodyView());
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  static const _containerHeight = 250;
+  var isShowAppBar = false;
+  var _controller = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(_listener);
   }
 
-  Widget bodyView() => SingleChildScrollView(
+  void _listener() {
+    double offset = _controller.offset;
+    var direction = _controller.position.userScrollDirection;
+
+    setState(() {
+      isShowAppBar = offset >= _containerHeight;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey,
+      body: bodyView(_controller),
+      appBar: isShowAppBar
+          ? AppBar(
+              title: Row(
+                children: const <Widget>[
+                  CircleAvatar(
+                    backgroundImage: NetworkImage(
+                      'https://i.pinimg.com/736x/dd/56/f8/dd56f888c5abbdc8b429afa07131d418.jpg',
+                    ),
+                  ),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  Text('Hào Chí')
+                ],
+              ),
+              flexibleSpace: Container(
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(colors: MyColor.colorHeader)),
+              ),
+            )
+          : null,
+    );
+  }
+
+  Widget bodyView(ScrollController scrollController) => SingleChildScrollView(
+        controller: scrollController,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
