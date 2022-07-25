@@ -7,7 +7,6 @@ class Videos extends StatelessWidget {
     return Container(
       height: 84,
       alignment: Alignment.bottomCenter,
-      padding: const EdgeInsets.only(bottom: 8),
       width: MediaQuery.of(context).size.width / 4,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
@@ -21,18 +20,6 @@ class Videos extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
-    // Column(
-    //   children: [
-    //     Image(
-    //       fit: BoxFit.fitWidth,
-    //       height: MediaQuery.of(context).size.width / 4,
-    //       width: MediaQuery.of(context).size.width / 4,
-    //       image: NetworkImage(
-    //           'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-    //     ),
-    //     // Positioned.fill(child: Text(title))
-    //   ],
-    // );
   }
 
   @override
@@ -43,9 +30,10 @@ class Videos extends StatelessWidget {
         appBar: AppBar(
           toolbarHeight: MediaQuery.of(context).size.width / 3.5,
           backgroundColor: Colors.white,
+          titleSpacing: 0,
           title: TabBar(
-            labelPadding: EdgeInsets.symmetric(horizontal: 8.0),
-            padding: const EdgeInsets.all(0),
+            padding: EdgeInsets.only(left: 12, right: 12),
+            labelPadding: EdgeInsets.symmetric(horizontal: 4.0),
             isScrollable: true,
             indicatorColor: Colors.transparent,
             indicatorWeight: 1,
@@ -61,7 +49,9 @@ class Videos extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            VideoPlayerScreen(),
+            Video(
+                url:
+                    'https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4'),
             buildPage('Theo dõi'),
             buildPage('Theo dõi'),
             buildPage('Theo dõi'),

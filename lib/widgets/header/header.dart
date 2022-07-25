@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/utils/extension.dart';
 import '../../../utils/constants.dart';
 
-class HeaderCategory extends StatelessWidget implements PreferredSizeWidget {
-  const HeaderCategory({
-    Key? key,
-  }) : super(key: key);
+class Header extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final Widget? iconLeft;
+  final List<Widget>? iconRights;
 
-  IconButton buildIconRight(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.arrow_forward),
-      tooltip: 'Arrow forward',
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
-  }
+  const Header(
+    this.title, {
+    Key? key,
+    this.iconLeft,
+    this.iconRights,
+  }) : super(key: key);
 
   @override
   // TODO: implement preferredSize
@@ -24,12 +22,13 @@ class HeaderCategory extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       centerTitle: true,
-      automaticallyImplyLeading: false,
-      actions: [buildIconRight(context)],
+      automaticallyImplyLeading: iconLeft == null ? false : true,
+      leading: iconLeft,
+      actions: iconRights,
       flexibleSpace: Container(
         decoration: const BoxDecoration(gradient: LinearGradient(colors: MyColor.colorHeader)),
       ),
-      title: const Text("Category"),
+      title: Text(title).medium(Colors.white),
     );
   }
 }
