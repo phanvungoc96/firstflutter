@@ -87,29 +87,66 @@ class _VideoPlayerScreenState extends State<Video> {
                         Visibility(
                           visible: true,
                           child: Container(
-                            color: Colors.transparent,
-                            alignment: Alignment.center,
-                            child: FlatButton(
-                              shape: CircleBorder(
-                                  side: BorderSide(color: Colors.white)),
-                              child: Icon(
-                                _controller.value.isPlaying
-                                    ? Icons.pause
-                                    : Icons.play_arrow,
-                                color: Colors.white,
-                              ),
-                              onPressed: () {
-                                // pause while video is playing, play while video is pausing
-                                setState(() {
-                                  _controller.value.isPlaying
-                                      ? _controller.pause()
-                                      : _controller.play();
-                                });
+                              color: Colors.transparent,
+                              alignment: Alignment.center,
+                              child: Column(
+                                children: [
+                                  Expanded(
+                                    child: Center(
+                                      child: FlatButton(
+                                        color: Colors.blueAccent,
+                                        height: 48,
+                                        shape: CircleBorder(
+                                            side: BorderSide(
+                                                color: Colors.white)),
+                                        child: Icon(
+                                          _controller.value.isPlaying
+                                              ? Icons.pause
+                                              : Icons.play_arrow,
+                                          color: Colors.white,
+                                          size: 28,
+                                        ),
+                                        onPressed: () {
+                                          // pause while video is playing, play while video is pausing
+                                          setState(() {
+                                            _controller.value.isPlaying
+                                                ? _controller.pause()
+                                                : _controller.play();
+                                          });
 
-                                // Auto dismiss overlay after 1 second
-                              },
-                            ),
-                          ),
+                                          // Auto dismiss overlay after 1 second
+                                        },
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    alignment: Alignment.bottomLeft,
+                                    child: FlatButton(
+                                      height: 28,
+                                      shape: CircleBorder(
+                                          side:
+                                              BorderSide(color: Colors.white)),
+                                      child: Icon(
+                                        _controller.value.isPlaying
+                                            ? Icons.volume_off_rounded
+                                            : Icons.volume_up_outlined,
+                                        color: Colors.white,
+                                        size: 20,
+                                      ),
+                                      onPressed: () {
+                                        // pause while video is playing, play while video is pausing
+                                        setState(() {
+                                          _controller.value.isPlaying
+                                              ? _controller.pause()
+                                              : _controller.play();
+                                        });
+
+                                        // Auto dismiss overlay after 1 second
+                                      },
+                                    ),
+                                  )
+                                ],
+                              )),
                         )
                       ],
                     ),
