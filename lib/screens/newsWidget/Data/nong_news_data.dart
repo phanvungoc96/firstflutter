@@ -8,19 +8,16 @@ const List<String> dataImgUrl = [
 ];
 
 final List<NewsModel> dataNews = [
-  NewsModel(
-      "Vụ ngư dân mất tích: Không thể đưa nạn nhân từ tàu cá sang tàu Cảnh sát biển",
-      "https://image.vtc.vn/upload/2022/07/20/ngu-dan-mat-tich-12444591.jpg",
-      "Thời sự",
-      "23 giờ"),
+  NewsModel("Vụ ngư dân mất tích: Không thể đưa nạn nhân từ tàu cá sang tàu Cảnh sát biển",
+      "https://image.vtc.vn/upload/2022/07/20/ngu-dan-mat-tich-12444591.jpg", "Thời sự", "23 giờ"),
   NewsModel(
       "Cục Hàng không ra văn bản khẩn sau vụ khách mang dao lên máy bay",
-      "https://img.cand.com.vn/resize/800x800/NewFiles/Images/2022/07/20/4_Nhan_vien_ANHK_tan_tinh_huong_-1658294576875.jpg",
+      "https://cdnimg.vietnamplus.vn/t620/uploaded/znaets/2022_07_21/283714058_546613890209737_6451879188130238480_n.jpg",
       "CAND",
       "20 giờ"),
   NewsModel(
       "Kỷ luật 2 Đại úy CSGT vừa lái ô tô vừa nghe điện thoại",
-      "https://static-images.vnncdn.net/files/publish/2022/7/20/canh-sat-gt-hau-giang-copy-402.jpg",
-      "Thời sự",
-      "2 giờ")
+      "https://znews-photo.zingcdn.me/w860/Uploaded/zxgorz/2022_07_20/z3530565309061_731a68809c0c0fb6555692c3f2dff3d9_1.jpg",
+      "CAND",
+      "10 giờ")
 ];

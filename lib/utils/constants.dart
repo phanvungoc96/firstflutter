@@ -5,6 +5,7 @@ class MyColor {
   static const Color grey = Color.fromRGBO(130, 130, 132, 1);
   static const Color lightGrey = Color.fromRGBO(239, 239, 241, 1);
   static const Color green = Color.fromRGBO(0, 136, 134, 1);
+  static const Color primary = Color.fromRGBO(0, 144, 153, 1);
   static const List<Color> colorHeader = [
     Color.fromRGBO(0, 144, 153, 1),
     Color.fromRGBO(0, 128, 163, 1),
