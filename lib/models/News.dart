@@ -6,15 +6,18 @@ class NewsModels {
   String? id;
   String? subTitle;
   String? content;
+  String? subContent;
 
-  NewsModels(
-      {this.createdAt,
-      this.title,
-      this.imgUrl,
-      this.newsType,
-      this.id,
-      this.content,
-      this.subTitle});
+  NewsModels({
+    this.createdAt,
+    this.title,
+    this.imgUrl,
+    this.newsType,
+    this.id,
+    this.content,
+    this.subTitle,
+    this.subContent,
+  });
 
   NewsModels.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];
@@ -22,6 +25,9 @@ class NewsModels {
     imgUrl = json['imgUrl'];
     newsType = json['newsType'];
     id = json['id'];
+    subTitle = json['subTitle'];
+    content = json['content'];
+    subContent = json['subContent'];
   }
 
   Map<String, dynamic> toJson() {
@@ -31,6 +37,9 @@ class NewsModels {
     data['imgUrl'] = imgUrl;
     data['newsType'] = newsType;
     data['id'] = id;
+    data['content'] = content;
+    data['subTitile'] = subTitle;
+    data['subContent'] = subContent;
     return data;
   }
 }
