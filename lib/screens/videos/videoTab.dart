@@ -20,18 +20,6 @@ class Videos extends StatelessWidget {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
       ),
     );
-    // Column(
-    //   children: [
-    //     Image(
-    //       fit: BoxFit.fitWidth,
-    //       height: MediaQuery.of(context).size.width / 4,
-    //       width: MediaQuery.of(context).size.width / 4,
-    //       image: NetworkImage(
-    //           'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-    //     ),
-    //     // Positioned.fill(child: Text(title))
-    //   ],
-    // );
   }
 
   @override
