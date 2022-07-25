@@ -10,7 +10,7 @@ class Videos extends StatelessWidget {
       width: MediaQuery.of(context).size.width / 4,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
-          color: Colors.blue,
+          color: Colors.transparent,
           image: DecorationImage(
               image: NetworkImage(
                   "https://storage.googleapis.com/gd-wagtail-prod-assets/original_images/MDA2018_inline_03.jpg"),
