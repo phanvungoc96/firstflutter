@@ -29,6 +29,7 @@ linter:
     undefined_identifier: false
     const_constructor_param_type_mismatch: false
     undefined_getter: false
+    prefer_final_fields: false
     non_constant_default_value: false
     missing_default_value_for_parameter: false
     final_initialized_in_declaration_and_constructor: false
