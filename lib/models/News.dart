@@ -4,8 +4,17 @@ class NewsModels {
   String? imgUrl;
   String? newsType;
   String? id;
+  String? subTitle;
+  String? content;
 
-  NewsModels({this.createdAt, this.title, this.imgUrl, this.newsType, this.id});
+  NewsModels(
+      {this.createdAt,
+      this.title,
+      this.imgUrl,
+      this.newsType,
+      this.id,
+      this.content,
+      this.subTitle});
 
   NewsModels.fromJson(Map<String, dynamic> json) {
     createdAt = json['createdAt'];

@@ -18,7 +18,9 @@ class NewsCard extends StatelessWidget {
           primary: Colors.transparent,
           elevation: 0,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/detail', arguments: news);
+        },
         child: Column(
           children: <Widget>[
             Image.network(news.imgUrl!),

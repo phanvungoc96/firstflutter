@@ -1,21 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/models/News.dart';
 
 import './bottomModal.dart';
-import '../../models/model.dart';
 
 class DetailPage extends StatefulWidget {
   static const routeName = '/detail';
-  final Item item;
-  const DetailPage(
-      {Key? key,
-      this.item = const Item(
-          title: 'vietnamNet',
-          time: '10/08/2022',
-          subTitle:
-              'Chiều 26/4, lãnh đạo Ban Tổ chức Trung ương đã tổ chức Lễ công bố và trao quyết định bổ nhiệm Phó Vụ trưởng Vụ V, Phó Vụ trưởng Vụ Tổ chức - cán bộ cơ quan, Phó Viện trưởng Viện Khoa học tổ chức, cán bộ và Phó Cục trưởng Cục Bảo vệ chính trị nội bộ qua hình thức thi tuyển, bảo lưu kết quả thi tuyển và bổ nhiệm từ nguồn nhân sự tại chỗ.',
-          content:
-              'Tại kỳ thi ứng tuyển chức danh Phó Cục trưởng Cục Bảo vệ chính trị nội bộ, có 6 thí sinh tham dự. Các thí sinh lần lượt trình bày đề án theo thứ tự bốc thăm và trả lời các câu hỏi phỏng vấn của Hội đồng thi tuyển.\nHội đồng đã thảo luận, thống nhất và quyết định lựa chọn đồng chí Đỗ Đức Trung là thí sinh có điểm số cao nhất ở chức danh ứng tuyển để bổ nhiệm. ')})
-      : super(key: key);
+  const DetailPage({Key? key}) : super(key: key);
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -41,6 +31,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    NewsModels item = ModalRoute.of(context)?.settings.arguments as NewsModels;
+
     var data = [
       'Trưởng công an huyện Đức Hòa nói về cáo buộc bắt cóc Diễm My',
       'World',
@@ -54,7 +46,7 @@ class _DetailPageState extends State<DetailPage> {
                     CrossAxisAlignment.center, // Centers vertically
                 children: <Widget>[
                   Text(
-                    widget.item.title,
+                    "Việt Nam Báo",
                     style: TextStyle(color: Colors.black, fontSize: 15),
                   ),
                   IconButton(
@@ -98,8 +90,8 @@ class _DetailPageState extends State<DetailPage> {
                           color: Colors.white,
                           child: Column(
                             children: <Widget>[
-                              const Text(
-                                'Sự gương mẫu của tổng bí thư là chô dựa vững chắc trong việc phòng chống tham nhũng',
+                              Text(
+                                item.title ?? '',
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
@@ -110,7 +102,7 @@ class _DetailPageState extends State<DetailPage> {
                                     const EdgeInsets.only(top: 12, bottom: 12),
                                 alignment: Alignment.centerLeft,
                                 child: Text(
-                                  widget.item.time,
+                                  item.createdAt ?? "",
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontWeight: FontWeight.bold,
@@ -118,7 +110,7 @@ class _DetailPageState extends State<DetailPage> {
                                 ),
                               ),
                               Text(
-                                widget.item.subTitle,
+                                item.subTitle ?? '',
                                 style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
@@ -128,13 +120,13 @@ class _DetailPageState extends State<DetailPage> {
                                 margin:
                                     const EdgeInsets.only(top: 12, bottom: 12),
                                 child: Center(
-                                    child: const Image(
-                                  image: NetworkImage(
+                                    child: Image(
+                                  image: NetworkImage(item.imgUrl ??
                                       'https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
                                 )),
                               ),
                               Text(
-                                widget.item.content,
+                                item.content ?? '',
                                 style: TextStyle(
                                     fontSize: 14, color: Colors.black),
                               ),

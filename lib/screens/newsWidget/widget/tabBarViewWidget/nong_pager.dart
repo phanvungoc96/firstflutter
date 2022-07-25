@@ -19,7 +19,6 @@ class _NongPagerState extends State<NongPager> {
   void initState() {
     super.initState();
     NetWorksRequest.fetchNews('News').then((value) {
-      print(value);
       setState(() {
         _newsData = value;
       });
