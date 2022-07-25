@@ -19,7 +19,15 @@ class _TabsScreenState extends State<TabsScreen> {
     },
     {
       'page': DetailPage(),
-      'title': 'Detail',
+      'title': 'Video',
+    },
+    {
+      'page': DetailPage(),
+      'title': 'Xu hướng',
+    },
+    {
+      'page': DetailPage(),
+      'title': 'Cá nhân',
     },
   ];
   int _selectedPageIndex = 0;
@@ -51,9 +59,10 @@ class _TabsScreenState extends State<TabsScreen> {
               child: BottomNavigationBar(
                 onTap: _selectPage,
                 backgroundColor: Colors.transparent,
-                unselectedItemColor: Theme.of(context).primaryColor,
+                unselectedItemColor: Colors.white,
                 selectedItemColor: Colors.yellow,
                 currentIndex: _selectedPageIndex,
+                showUnselectedLabels: true,
                 iconSize: 20,
                 items: const [
                   BottomNavigationBarItem(
@@ -63,8 +72,18 @@ class _TabsScreenState extends State<TabsScreen> {
                   ),
                   BottomNavigationBarItem(
                     backgroundColor: Colors.transparent,
-                    icon: Icon(Icons.star),
-                    label: 'Favorites',
+                    icon: Icon(Icons.smart_display),
+                    label: 'Video',
+                  ),
+                  BottomNavigationBarItem(
+                    backgroundColor: Colors.transparent,
+                    icon: Icon(Icons.trending_up),
+                    label: 'Xu hướng',
+                  ),
+                  BottomNavigationBarItem(
+                    backgroundColor: Colors.transparent,
+                    icon: Icon(Icons.account_circle),
+                    label: 'Cá nhân',
                   ),
                 ],
               ),
