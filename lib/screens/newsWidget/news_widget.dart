@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/screens/category/category_screen.dart';
 import 'package:my_app/screens/newsWidget/widget/tabBarViewWidget/theo_doi_pager.dart';
 import 'package:my_app/utils/constants.dart';
 
@@ -7,7 +6,7 @@ import './widget/tabBarViewWidget/nong_pager.dart';
 
 class News extends StatelessWidget {
   const News({Key? key}) : super(key: key);
-
+  static const routeName = '/news';
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -82,7 +81,9 @@ class News extends StatelessWidget {
             ),
             actions: <Widget>[
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, '/search');
+                },
                 icon: const Icon(Icons.search),
               ),
               IconButton(onPressed: () {}, icon: const Icon(Icons.person))

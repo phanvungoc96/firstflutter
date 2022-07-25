@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-
-import '../../../models/news_model.dart';
+import 'package:my_app/models/News.dart';
 
 class NewsCard extends StatelessWidget {
-  final NewsModel news;
+  final NewsModels news;
 
   const NewsCard({Key? key, required this.news}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double width = MediaQuery.of(context).size.width;
-
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: const BoxDecoration(
@@ -21,35 +18,35 @@ class NewsCard extends StatelessWidget {
           primary: Colors.transparent,
           elevation: 0,
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/detail', arguments: news);
+        },
         child: Column(
           children: <Widget>[
-            Image.network(news.imgUrl),
+            Image.network(news.imgUrl!),
             const SizedBox(height: 8),
             Align(
               alignment: Alignment.centerLeft,
               child: SizedBox(
-                  width: width / 3,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        news.newsType,
-                        style: const TextStyle(color: Colors.red, fontSize: 14),
-                      ),
-                      Text(
-                        news.hours,
-                        style:
-                            const TextStyle(color: Colors.grey, fontSize: 14),
-                      )
-                    ],
-                  )),
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    news.newsType!,
+                    style: const TextStyle(color: Colors.red, fontSize: 14),
+                  ),
+                  Text(
+                    news.createdAt!,
+                    style: const TextStyle(color: Colors.grey, fontSize: 14),
+                  )
+                ],
+              )),
             ),
             const SizedBox(
               height: 8,
             ),
             Text(
-              news.title,
+              news.title!,
               style: const TextStyle(fontSize: 16, color: Colors.black),
             )
           ],

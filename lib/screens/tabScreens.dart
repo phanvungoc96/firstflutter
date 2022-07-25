@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/screens/trending/trending_screen.dart';
+import 'package:my_app/screens/videos/videoTab.dart';
 
 import './newsWidget/news_widget.dart';
 import './detail/detail.dart';
@@ -19,7 +20,7 @@ class _TabsScreenState extends State<TabsScreen> {
       'title': 'News',
     },
     {
-      'page': DetailPage(),
+      'page': Videos(),
       'title': 'Video',
     },
     {
@@ -54,7 +55,7 @@ class _TabsScreenState extends State<TabsScreen> {
               Color.fromRGBO(0, 106, 154, 1),
               Color.fromRGBO(0, 93, 152, 1),
             ])),
-            height: 68,
+            height: 72,
             child: SingleChildScrollView(
               physics: NeverScrollableScrollPhysics(),
               child: BottomNavigationBar(
@@ -64,7 +65,7 @@ class _TabsScreenState extends State<TabsScreen> {
                 selectedItemColor: Colors.yellow,
                 currentIndex: _selectedPageIndex,
                 showUnselectedLabels: true,
-                iconSize: 20,
+                iconSize: 24,
                 items: const [
                   BottomNavigationBarItem(
                     backgroundColor: Colors.transparent,
@@ -73,7 +74,7 @@ class _TabsScreenState extends State<TabsScreen> {
                   ),
                   BottomNavigationBarItem(
                     backgroundColor: Colors.transparent,
-                    icon: Icon(Icons.smart_display),
+                    icon: Icon(Icons.play_arrow),
                     label: 'Video',
                   ),
                   BottomNavigationBarItem(
