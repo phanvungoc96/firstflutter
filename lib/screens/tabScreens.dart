@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/trending/trending_screen.dart';
 import 'package:my_app/screens/videos/videoTab.dart';
 
@@ -27,7 +28,7 @@ class _TabsScreenState extends State<TabsScreen> {
       'title': 'Xu hướng',
     },
     {
-      'page': TrendingScreen(),
+      'page': Profile(),
       'title': 'Cá nhân',
     },
   ];

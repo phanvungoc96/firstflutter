@@ -86,7 +86,11 @@ class News extends StatelessWidget {
                 },
                 icon: const Icon(Icons.search),
               ),
-              IconButton(onPressed: () {}, icon: const Icon(Icons.person))
+              IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/profile');
+                  },
+                  icon: const Icon(Icons.person))
             ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(
@@ -95,24 +99,24 @@ class News extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: [
-            const TheoDoiPager(),
-            const NongPager(),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi'),
-            buildPage('Theo dõi')
+          children: const <Widget>[
+            TheoDoiPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
+            NongPager(),
           ],
         ),
       ),
