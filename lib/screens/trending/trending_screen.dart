@@ -6,22 +6,28 @@ import 'package:my_app/utils/extension.dart';
 import 'package:my_app/widgets/header/header.dart';
 
 import '../../models/news_model.dart';
+import '../detail/detail.dart';
 
 class TrendingScreen extends StatelessWidget {
   static const routeName = '/trending';
 
   const TrendingScreen({Key? key}) : super(key: key);
 
-  Widget newsTrending(String title, List<NewsModel> dataNews) {
-    return Container(
-      color: Colors.white,
-      padding: EdgeInsets.all(10),
-      child: Column(
-        children: [
-          buildTitle(title),
-          SizedBox(height: 10),
-          ...buildListItem(dataNews),
-        ],
+  Widget newsTrending(String title, List<NewsModel> dataNews, BuildContext context) {
+    return InkWell(
+      onTap: () {
+        Navigator.pushNamed(context, DetailPage.routeName);
+      },
+      child: Container(
+        color: Colors.white,
+        padding: EdgeInsets.all(10),
+        child: Column(
+          children: [
+            buildTitle(title),
+            SizedBox(height: 10),
+            ...buildListItem(dataNews),
+          ],
+        ),
       ),
     );
   }
@@ -55,11 +61,11 @@ class TrendingScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            newsTrending("Đang được quan tâm", dataNews),
+            newsTrending("Đang được quan tâm", dataNews, context),
             SizedBox(height: 10),
-            newsTrending("Nóng 24H", dataNews),
+            newsTrending("Nóng 24H", dataNews, context),
             SizedBox(height: 10),
-            newsTrending("Góc nhìn và phân tích", dataNews),
+            newsTrending("Góc nhìn và phân tích", dataNews, context),
           ],
         ),
       ),

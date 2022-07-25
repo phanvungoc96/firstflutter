@@ -1,3 +1,6 @@
+import 'package:my_app/models/news_model.dart';
+
+import '../models/News.dart';
 import '../models/new_channel.dart';
 import '../models/category.dart';
 
