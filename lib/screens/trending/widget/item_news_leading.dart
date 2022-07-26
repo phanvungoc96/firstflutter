@@ -39,7 +39,7 @@ class ItemNewsLeading extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(text, maxLines: 1, overflow: TextOverflow.ellipsis).title(Colors.black),
+                Text(text).title(Colors.black, line: 2),
                 Row(
                   children: [
                     Text(newsType).medium(MyColor.primary),
