@@ -14,7 +14,7 @@ class NongPager extends StatefulWidget {
 
 class _NongPagerState extends State<NongPager> {
   List<NewsModels> _newsData = [];
-
+  bool _isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -22,6 +22,7 @@ class _NongPagerState extends State<NongPager> {
   }
 
   void getNews() {
+    setState(() {});
     NetWorksRequest.fetchNews('News').then((value) {
       setState(() {
         _newsData = value;

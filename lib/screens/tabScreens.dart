@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/trending/trending_screen.dart';
 import 'package:my_app/screens/videos/videoTab.dart';
 
 import './newsWidget/news_widget.dart';
-import './detail/detail.dart';
 import './category/category_screen.dart';
 
 class TabsScreen extends StatefulWidget {
@@ -28,7 +28,7 @@ class _TabsScreenState extends State<TabsScreen> {
       'title': 'Xu hướng',
     },
     {
-      'page': DetailPage(),
+      'page': Profile(),
       'title': 'Cá nhân',
     },
   ];
