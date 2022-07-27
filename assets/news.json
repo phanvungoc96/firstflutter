@@ -1,0 +1,23 @@
+{
+  "code": 200,
+  "data": [
+    {
+      "news_type": "Thời sự",
+      "img_url":"https://image.vtc.vn/upload/2022/07/20/ngu-dan-mat-tich-12444591.jpg" ,
+      "title":"Vụ ngư dân mất tích: Không thể đưa nạn nhân từ tàu cá sang tàu Cảnh sát biển" ,
+      "hours": "23 giờ"
+    },
+    {
+      "news_type":   "CAND",
+      "img_url": "https://cdnimg.vietnamplus.vn/t620/uploaded/znaets/2022_07_21/283714058_546613890209737_6451879188130238480_n.jpg",
+      "title": "Cục Hàng không ra văn bản khẩn sau vụ khách mang dao lên máy bay" ,
+      "hours":  "20 giờ"
+    },
+    {
+      "news_type":"CAND",
+      "img_url": "https://znews-photo.zingcdn.me/w860/Uploaded/zxgorz/2022_07_20/z3530565309061_731a68809c0c0fb6555692c3f2dff3d9_1.jpg",
+      "title":  "Kỷ luật 2 Đại úy CSGT vừa lái ô tô vừa nghe điện thoại",
+      "hours": "10 giờ"
+    }
+  ]
+}

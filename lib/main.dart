@@ -5,7 +5,8 @@ import 'package:my_app/screens/newsWidget/news_widget.dart';
 import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/search/search.dart';
 import 'package:my_app/screens/tabScreens.dart';
-import 'package:my_app/screens/trending/trending_screen.dart';
+
+import 'modules/trending/pages/trending_screen.dart';
 
 void main() {
   runApp(const MyApp());

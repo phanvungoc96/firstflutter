@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/utils/extension.dart';
-
 import '../../../utils/constants.dart';
+import '../models/news_trending.dart';
 
 class ItemNewsLeading extends StatelessWidget {
-  final String urlImage;
-  final String text;
-  final String newsType;
-  final String hours;
+  final NewsTrending newsTrending;
 
   const ItemNewsLeading(
-    this.urlImage,
-    this.text,
-    this.newsType,
-    this.hours, {
+    this.newsTrending, {
     Key? key,
   }) : super(key: key);
 
@@ -26,7 +20,7 @@ class ItemNewsLeading extends StatelessWidget {
           child: Image.network(
             width: 120,
             height: 80,
-            urlImage,
+            newsTrending.imgUrl ?? "",
             fit: BoxFit.cover,
             filterQuality: FilterQuality.medium,
           ),
@@ -39,12 +33,12 @@ class ItemNewsLeading extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(text).title(Colors.black, line: 2),
+                Text(newsTrending.title ?? "").title(Colors.black, line: 2),
                 Row(
                   children: [
-                    Text(newsType).medium(MyColor.primary),
+                    Text(newsTrending.newsType ?? "").medium(MyColor.primary),
                     SizedBox(width: 3),
-                    Text(" - $hours").medium(Colors.black26),
+                    Text(" - ${newsTrending.hours}").medium(Colors.black26),
                   ],
                 )
               ],
