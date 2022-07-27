@@ -4,6 +4,7 @@ import 'package:my_app/bloc/profile/profile_bloc.dart';
 import 'package:my_app/screens/profile/widgets/category_widget.dart';
 import 'package:my_app/screens/profile/widgets/choose_type_news_card.dart';
 import 'package:my_app/utils/constants.dart';
+import 'package:my_app/widgets/loading_text_shimmer/loading_text_shimmer.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -42,9 +43,13 @@ class _ProfileState extends State<Profile> {
               title: BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
                   if (state is ProfileLoading) {
-                    return SizedBox();
+                    return LoadingTextShimmer();
                   } else if (state is ProfileLoaded) {
-                    return AppBarWidget(urlImg: state.urlImg, name: state.name);
+                    return AppBarWidget(
+                      urlImg: state.urlImg,
+                      name: state.name,
+                      isSmall: true,
+                    );
                   } else {
                     return AppBarWidget();
                   }
@@ -131,7 +136,9 @@ class _ProfileState extends State<Profile> {
                             urlImg: state.urlImg,
                           );
                         } else if (state is ProfileLoading) {
-                          return SizedBox();
+                          return LoadingTextShimmer(
+                            textStyle: TextStyle(fontSize: 30),
+                          );
                         } else if (state is ProfileError) {
                           return SizedBox();
                         } else {
@@ -151,11 +158,10 @@ class _ProfileState extends State<Profile> {
 class AppBarWidget extends StatelessWidget {
   final String name;
   final String urlImg;
-  const AppBarWidget({
-    Key? key,
-    this.name = 'Unknow',
-    this.urlImg = '',
-  }) : super(key: key);
+  final bool isSmall;
+  const AppBarWidget(
+      {Key? key, this.name = 'Unknow', this.urlImg = '', this.isSmall = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -164,8 +170,8 @@ class AppBarWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(100.0),
         //or 15.0
         child: SizedBox(
-          height: 60,
-          width: 60,
+          height: isSmall ? 40 : 60,
+          width: isSmall ? 40 : 60,
           child: urlImg.isEmpty
               ? Icon(Icons.person)
               : Image.network(
