@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/bloc/profile/profile_bloc.dart';
 import 'package:my_app/screens/newsWidget/widget/tabBarViewWidget/theo_doi_pager.dart';
 import 'package:my_app/utils/constants.dart';
 
@@ -7,6 +9,7 @@ import './widget/tabBarViewWidget/nong_pager.dart';
 class News extends StatelessWidget {
   const News({Key? key}) : super(key: key);
   static const routeName = '/news';
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -86,11 +89,21 @@ class News extends StatelessWidget {
                 },
                 icon: const Icon(Icons.search),
               ),
-              IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/profile');
-                  },
-                  icon: const Icon(Icons.person))
+              BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+                  return IconButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/profile');
+                      },
+                      icon: state is ProfileLoaded
+                          ? ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.network(
+                                  state.profileModel.avatar ?? ''),
+                            )
+                          : Icon(Icons.person));
+                },
+              )
             ],
             flexibleSpace: Container(
               decoration: const BoxDecoration(

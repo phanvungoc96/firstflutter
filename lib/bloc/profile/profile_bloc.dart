@@ -2,18 +2,19 @@ import 'dart:math';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:my_app/networks/profile_request.dart';
 
 import '../../models/profile.dart';
+import '../../networks/profile_request.dart';
 
 part 'profile_event.dart';
 part 'profile_state.dart';
 
 class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
-  ProfileBloc() : super(ProfileLoading()) {
+  ProfileBloc() : super(ProfileInitial()) {
     on<ProfileEvent>((event, emit) async {
       if (event is GetProfile) {
         try {
+          emit(ProfileLoading());
           final userProfile = await ProfileRequest.fetchProfiles();
           if (userProfile.isNotEmpty) {
             final random = Random();
@@ -27,6 +28,9 @@ class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
         } catch (e) {
           emit(ProfileError(e.toString()));
         }
+      }
+      if (event is Logout) {
+        emit(ProfileInitial());
       }
     });
   }

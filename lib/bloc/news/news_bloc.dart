@@ -7,11 +7,12 @@ part 'news_event.dart';
 part 'news_state.dart';
 
 class NewsBloc extends Bloc<NewsEvent, NewsState> {
-  NewsBloc() : super(ListNewsLoading()) {
+  NewsBloc() : super(NewsInitial()) {
     on<NewsEvent>((event, emit) async {
       // TODO: implement event handler
       if (event is GetListNews) {
         try {
+          emit(ListNewsLoading());
           List<NewsModels> newsData = await NewsRequest.fetchNews();
           if (newsData.isNotEmpty) {
             emit(ListNewsLoaded(newsData));

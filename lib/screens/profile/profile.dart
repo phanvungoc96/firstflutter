@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/bloc/profile/profile_bloc.dart';
+import 'package:my_app/screens/profile/widgets/appbar_widget.dart';
 import 'package:my_app/screens/profile/widgets/category_widget.dart';
 import 'package:my_app/screens/profile/widgets/choose_type_news_card.dart';
 import 'package:my_app/utils/constants.dart';
@@ -23,7 +24,6 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     _controller.addListener(_listener);
-    BlocProvider.of<ProfileBloc>(context).add(GetProfile());
   }
 
   void _listener() {
@@ -95,7 +95,32 @@ class _ProfileState extends State<Profile> {
             SizedBox(
               height: 8,
             ),
-            CategoryWidget(category: 'sp')
+            CategoryWidget(category: 'sp'),
+            SizedBox(
+              height: 8,
+            ),
+            BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileLoaded) {
+                  return Container(
+                    color: Colors.white,
+                    child: ListTile(
+                      onTap: () {
+                        BlocProvider.of<ProfileBloc>(context).add(Logout());
+                      },
+                      trailing: null,
+                      leading: null,
+                      title: const Text(
+                        'Đăng xuất',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            )
           ],
         ),
       );
@@ -139,8 +164,6 @@ class _ProfileState extends State<Profile> {
                           return LoadingTextShimmer(
                             textStyle: TextStyle(fontSize: 30),
                           );
-                        } else if (state is ProfileError) {
-                          return SizedBox();
                         } else {
                           return AppBarWidget();
                         }
@@ -153,38 +176,4 @@ class _ProfileState extends State<Profile> {
           );
         });
       });
-}
-
-class AppBarWidget extends StatelessWidget {
-  final String name;
-  final String urlImg;
-  final bool isSmall;
-  const AppBarWidget(
-      {Key? key, this.name = 'Unknow', this.urlImg = '', this.isSmall = false})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(children: <Widget>[
-      ClipRRect(
-        borderRadius: BorderRadius.circular(100.0),
-        //or 15.0
-        child: SizedBox(
-          height: isSmall ? 40 : 60,
-          width: isSmall ? 40 : 60,
-          child: urlImg.isEmpty
-              ? Icon(Icons.person)
-              : Image.network(
-                  urlImg,
-                ),
-        ),
-      ),
-      const SizedBox(width: 8),
-      Text(
-        name,
-        style: TextStyle(
-            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-      )
-    ]);
-  }
 }

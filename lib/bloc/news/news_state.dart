@@ -3,6 +3,8 @@ part of 'news_bloc.dart';
 @immutable
 abstract class NewsState {}
 
+class NewsInitial extends NewsState {}
+
 class ListNewsLoading extends NewsState {}
 
 class ListNewsLoaded extends NewsState {
