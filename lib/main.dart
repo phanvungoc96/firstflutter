@@ -7,6 +7,7 @@ import 'package:my_app/screens/detail/detail.dart';
 import 'package:my_app/screens/newsWidget/news_widget.dart';
 import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/search/search.dart';
+import 'package:my_app/screens/suggest_follow/suggest.dart';
 import 'package:my_app/screens/tabScreens.dart';
 import 'package:my_app/screens/trending/trending_screen.dart';
 
@@ -83,7 +84,8 @@ class MyApp extends StatelessWidget {
           TrendingScreen.routeName: (ctx) => TrendingScreen(),
           News.routeName: (ctx) => News(),
           Search.routeName: (ctx) => Search(),
-          Profile.routeName: (ctx) => Profile()
+          Profile.routeName: (ctx) => Profile(),
+          SuggestFollow.routeName: (ctx) => SuggestFollow()
         },
         onGenerateRoute: (settings) {
           print(settings.arguments);
