@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:my_app/models/News.dart';
-import 'package:my_app/networks/networks_request.dart';
+import 'package:my_app/networks/news_request.dart';
 
 part 'news_event.dart';
 part 'news_state.dart';
@@ -12,7 +12,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
       // TODO: implement event handler
       if (event is GetListNews) {
         try {
-          List<NewsModels> newsData = await NetWorksRequest.fetchNews();
+          List<NewsModels> newsData = await NewsRequest.fetchNews();
           if (newsData.isNotEmpty) {
             emit(ListNewsLoaded(newsData));
           } else {

@@ -6,9 +6,11 @@ abstract class ProfileState {}
 class ProfileLoading extends ProfileState {}
 
 class ProfileLoaded extends ProfileState {
-  final String name;
-  final String urlImg;
-  ProfileLoaded(this.name, this.urlImg);
+  final ProfileModel profileModel;
+  ProfileLoaded(this.profileModel);
 }
 
-class ProfileError extends ProfileState {}
+class ProfileError extends ProfileState {
+  final String ms;
+  ProfileError(this.ms);
+}

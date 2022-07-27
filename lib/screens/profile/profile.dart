@@ -46,8 +46,8 @@ class _ProfileState extends State<Profile> {
                     return LoadingTextShimmer();
                   } else if (state is ProfileLoaded) {
                     return AppBarWidget(
-                      urlImg: state.urlImg,
-                      name: state.name,
+                      urlImg: state.profileModel.avatar ?? '',
+                      name: state.profileModel.name ?? '',
                       isSmall: true,
                     );
                   } else {
@@ -132,8 +132,8 @@ class _ProfileState extends State<Profile> {
                       builder: (context, state) {
                         if (state is ProfileLoaded) {
                           return AppBarWidget(
-                            name: state.name,
-                            urlImg: state.urlImg,
+                            name: state.profileModel.name ?? '',
+                            urlImg: state.profileModel.avatar ?? '',
                           );
                         } else if (state is ProfileLoading) {
                           return LoadingTextShimmer(
