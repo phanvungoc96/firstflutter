@@ -1,6 +1,9 @@
 // ignore_for_file: file_names
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../bloc/profile/profile_bloc.dart';
 
 class LoginType extends StatelessWidget {
   final titleController = TextEditingController();
@@ -44,7 +47,8 @@ class LoginType extends StatelessWidget {
               ),
             ),
             TextButton(
-                onPressed: () => {},
+                onPressed: () =>
+                    {BlocProvider.of<ProfileBloc>(context).add(GetProfile())},
                 child: Container(
                   padding: const EdgeInsets.only(top: 12, bottom: 12),
                   decoration: BoxDecoration(

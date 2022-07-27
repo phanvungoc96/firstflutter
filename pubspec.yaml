@@ -36,6 +36,8 @@ dependencies:
   google_fonts: ^3.0.1
   cached_network_image: ^3.2.1
   http: ^0.13.4
+  flutter_bloc:
+  equatable:
 
 dev_dependencies:
   flutter_test:

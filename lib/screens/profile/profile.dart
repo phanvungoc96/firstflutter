@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/bloc/profile/profile_bloc.dart';
 import 'package:my_app/screens/profile/widgets/category_widget.dart';
 import 'package:my_app/screens/profile/widgets/choose_type_news_card.dart';
 import 'package:my_app/utils/constants.dart';
@@ -20,12 +22,11 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     _controller.addListener(_listener);
+    BlocProvider.of<ProfileBloc>(context).add(GetProfile());
   }
 
   void _listener() {
     double offset = _controller.offset;
-    var direction = _controller.position.userScrollDirection;
-
     setState(() {
       isShowAppBar = offset >= _containerHeight;
     });
@@ -38,18 +39,16 @@ class _ProfileState extends State<Profile> {
       body: bodyView(_controller),
       appBar: isShowAppBar
           ? AppBar(
-              title: Row(
-                children: const <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/736x/dd/56/f8/dd56f888c5abbdc8b429afa07131d418.jpg',
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text('Hào Chí')
-                ],
+              title: BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+                  if (state is ProfileLoading) {
+                    return SizedBox();
+                  } else if (state is ProfileLoaded) {
+                    return AppBarWidget(urlImg: state.urlImg, name: state.name);
+                  } else {
+                    return AppBarWidget();
+                  }
+                },
               ),
               flexibleSpace: Container(
                 decoration: const BoxDecoration(
@@ -124,26 +123,22 @@ class _ProfileState extends State<Profile> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Row(children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0), //or 15.0
-                        child: SizedBox(
-                          height: 60,
-                          width: 60,
-                          child: Image.network(
-                            'https://i.pinimg.com/736x/dd/56/f8/dd56f888c5abbdc8b429afa07131d418.jpg',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Hào Chí',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      )
-                    ]),
+                    child: BlocBuilder<ProfileBloc, ProfileState>(
+                      builder: (context, state) {
+                        if (state is ProfileLoaded) {
+                          return AppBarWidget(
+                            name: state.name,
+                            urlImg: state.urlImg,
+                          );
+                        } else if (state is ProfileLoading) {
+                          return SizedBox();
+                        } else if (state is ProfileError) {
+                          return SizedBox();
+                        } else {
+                          return AppBarWidget();
+                        }
+                      },
+                    ),
                   ),
                 ),
               ],
@@ -151,4 +146,39 @@ class _ProfileState extends State<Profile> {
           );
         });
       });
+}
+
+class AppBarWidget extends StatelessWidget {
+  final String name;
+  final String urlImg;
+  const AppBarWidget({
+    Key? key,
+    this.name = 'Unknow',
+    this.urlImg = '',
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(children: <Widget>[
+      ClipRRect(
+        borderRadius: BorderRadius.circular(100.0),
+        //or 15.0
+        child: SizedBox(
+          height: 60,
+          width: 60,
+          child: urlImg.isEmpty
+              ? Icon(Icons.person)
+              : Image.network(
+                  urlImg,
+                ),
+        ),
+      ),
+      const SizedBox(width: 8),
+      Text(
+        name,
+        style: TextStyle(
+            fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
+      )
+    ]);
+  }
 }
