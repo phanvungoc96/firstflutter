@@ -70,7 +70,11 @@ class _NongPagerState extends State<NongPager> {
               BlocConsumer<NewsBloc, NewsState>(
                 builder: (context, state) {
                   if (state is ListNewsLoading) {
-                    return LoadingTextShimmer();
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: LoadingTextShimmer(
+                          textStyle: TextStyle(fontSize: 25),
+                        ));
                   } else if (state is ListNewsLoaded) {
                     return SizedBox(
                       width: MediaQuery.of(context).size.width,

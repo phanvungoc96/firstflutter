@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/bloc/bloc_observer.dart';
 import 'package:my_app/bloc/news/news_bloc.dart';
 import 'package:my_app/bloc/profile/profile_bloc.dart';
 import 'package:my_app/screens/category/category_screen.dart';
@@ -10,7 +9,6 @@ import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/search/search.dart';
 import 'package:my_app/screens/tabScreens.dart';
 import 'package:my_app/screens/trending/trending_screen.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -70,11 +68,8 @@ class MyApp extends StatelessWidget {
           create: (_) => ProfileBloc(),
         ),
         BlocProvider<NewsBloc>(create: (_) => NewsBloc()),
-        BlocProvider(
-      create: (_) => ThemeCubit(),
+        BlocProvider(create: (_) => ThemeCubit()),
       ],
-
- 1c4f3ac0978b6531db120b7897675a52b
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
