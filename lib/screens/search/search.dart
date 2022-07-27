@@ -20,7 +20,7 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
-    NetWorksRequest.fetchNews('News').then((value) {
+    NetWorksRequest.fetchNews().then((value) {
       print(value);
       setState(() {
         _newsData = value;

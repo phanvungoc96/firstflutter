@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/bloc/bloc_observer.dart';
+import 'package:my_app/bloc/news/news_bloc.dart';
 import 'package:my_app/bloc/profile/profile_bloc.dart';
 import 'package:my_app/screens/category/category_screen.dart';
 import 'package:my_app/screens/detail/detail.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ProfileBloc>(
           create: (_) => ProfileBloc(),
         ),
+        BlocProvider<NewsBloc>(create: (_) => NewsBloc())
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

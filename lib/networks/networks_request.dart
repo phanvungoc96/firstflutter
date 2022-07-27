@@ -14,8 +14,8 @@ class NetWorksRequest {
     return news;
   }
 
-  static Future<List<NewsModels>> fetchNews(String model) async {
-    final response = await http.get(Uri.parse(url + model));
+  static Future<List<NewsModels>> fetchNews() async {
+    final response = await http.get(Uri.parse('${url}News'));
     if (response.statusCode == 200) {
       return compute(parseNews, response.body);
     } else if (response.statusCode == 404) {
