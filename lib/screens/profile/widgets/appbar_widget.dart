@@ -18,13 +18,14 @@ class AppBarWidget extends StatelessWidget {
       backgroundColor: Colors.transparent,
       builder: (_) {
         return GestureDetector(
-          onTap: () {},
+          onTap: () => Navigator.of(ctx).pop(), // Closing the sheet.
           behavior: HitTestBehavior.opaque,
           child: LoginType(),
         );
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {

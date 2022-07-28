@@ -47,8 +47,10 @@ class LoginType extends StatelessWidget {
               ),
             ),
             TextButton(
-                onPressed: () =>
-                    {BlocProvider.of<ProfileBloc>(context).add(GetProfile())},
+                onPressed: () => {
+                      BlocProvider.of<ProfileBloc>(context).add(GetProfile()),
+                      Navigator.pop(context) // close modal
+                    },
                 child: Container(
                   padding: const EdgeInsets.only(top: 12, bottom: 12),
                   decoration: BoxDecoration(
