@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:my_app/networks/networks_request.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/bloc/news/news_bloc.dart';
+import 'package:my_app/widgets/loading_text_shimmer/loading_text_shimmer.dart';
 
-import '../../../../models/News.dart';
 import '../../../../widgets/news_card.dart';
 import '../audio_news.dart';
 
@@ -13,23 +14,15 @@ class NongPager extends StatefulWidget {
 }
 
 class _NongPagerState extends State<NongPager> {
-  List<NewsModels> _newsData = [];
-  bool _isLoading = false;
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
     getNews();
   }
 
   void getNews() {
-    setState(() {});
-    NetWorksRequest.fetchNews('News').then((value) {
-      setState(() {
-        _newsData = value;
-      });
-    }).catchError((e) {
-      print(e);
-    });
+    BlocProvider.of<NewsBloc>(context).add(GetListNews());
   }
 
   Future<void> refreshNews() async {
@@ -74,14 +67,40 @@ class _NongPagerState extends State<NongPager> {
               ),
               const AudioNews(),
               const SizedBox(height: 4),
-              Column(
-                children: <Widget>[
-                  ..._newsData
-                      .map((e) => Container(
-                          margin: const EdgeInsets.only(bottom: 4),
-                          child: NewsCard(news: e)))
-                      .toList()
-                ],
+              BlocConsumer<NewsBloc, NewsState>(
+                builder: (context, state) {
+                  if (state is ListNewsLoading) {
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height / 3,
+                        child: LoadingTextShimmer(
+                          textStyle: TextStyle(fontSize: 25),
+                        ));
+                  } else if (state is ListNewsLoaded) {
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      child: Column(
+                        children: state.news
+                            .map((e) => Container(
+                                margin: const EdgeInsets.only(bottom: 4),
+                                child: NewsCard(news: e)))
+                            .toList(),
+                      ),
+                    );
+                  } else {
+                    return SizedBox();
+                  }
+                },
+                listener: (context, state) {
+                  if (state is ListNewsError) {
+                    final snackBar = SnackBar(
+                      content: Text(state.ms),
+                    );
+
+                    // Find the ScaffoldMessenger in the widget tree
+                    // and use it to show a SnackBar.
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  }
+                },
               )
             ],
           ),

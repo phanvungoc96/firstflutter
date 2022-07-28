@@ -3,7 +3,7 @@ import 'package:my_app/screens/search/widgets/tim_nhanh_widget.dart';
 import 'package:my_app/widgets/news_card.dart';
 
 import '../../models/News.dart';
-import '../../networks/networks_request.dart';
+import '../../networks/news_request.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -20,7 +20,7 @@ class _SearchState extends State<Search> {
   @override
   void initState() {
     super.initState();
-    NetWorksRequest.fetchNews('News').then((value) {
+    NewsRequest.fetchNews().then((value) {
       print(value);
       setState(() {
         _newsData = value;

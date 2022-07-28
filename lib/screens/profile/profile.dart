@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:my_app/bloc/profile/profile_bloc.dart';
+import 'package:my_app/screens/profile/widgets/appbar_widget.dart';
 import 'package:my_app/screens/profile/widgets/category_widget.dart';
 import 'package:my_app/screens/profile/widgets/choose_type_news_card.dart';
 import 'package:my_app/utils/constants.dart';
+import 'package:my_app/widgets/loading_text_shimmer/loading_text_shimmer.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -24,8 +28,6 @@ class _ProfileState extends State<Profile> {
 
   void _listener() {
     double offset = _controller.offset;
-    var direction = _controller.position.userScrollDirection;
-
     setState(() {
       isShowAppBar = offset >= _containerHeight;
     });
@@ -38,18 +40,20 @@ class _ProfileState extends State<Profile> {
       body: bodyView(_controller),
       appBar: isShowAppBar
           ? AppBar(
-              title: Row(
-                children: const <Widget>[
-                  CircleAvatar(
-                    backgroundImage: NetworkImage(
-                      'https://i.pinimg.com/736x/dd/56/f8/dd56f888c5abbdc8b429afa07131d418.jpg',
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Text('Hào Chí')
-                ],
+              title: BlocBuilder<ProfileBloc, ProfileState>(
+                builder: (context, state) {
+                  if (state is ProfileLoading) {
+                    return LoadingTextShimmer();
+                  } else if (state is ProfileLoaded) {
+                    return AppBarWidget(
+                      urlImg: state.profileModel.avatar ?? '',
+                      name: state.profileModel.name ?? '',
+                      isSmall: true,
+                    );
+                  } else {
+                    return AppBarWidget();
+                  }
+                },
               ),
               flexibleSpace: Container(
                 decoration: const BoxDecoration(
@@ -91,7 +95,32 @@ class _ProfileState extends State<Profile> {
             SizedBox(
               height: 8,
             ),
-            CategoryWidget(category: 'sp')
+            CategoryWidget(category: 'sp'),
+            SizedBox(
+              height: 8,
+            ),
+            BlocBuilder<ProfileBloc, ProfileState>(
+              builder: (context, state) {
+                if (state is ProfileLoaded) {
+                  return Container(
+                    color: Colors.white,
+                    child: ListTile(
+                      onTap: () {
+                        BlocProvider.of<ProfileBloc>(context).add(Logout());
+                      },
+                      trailing: null,
+                      leading: null,
+                      title: const Text(
+                        'Đăng xuất',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ),
+                  );
+                } else {
+                  return SizedBox();
+                }
+              },
+            )
           ],
         ),
       );
@@ -124,26 +153,22 @@ class _ProfileState extends State<Profile> {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 24),
-                    child: Row(children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(100.0), //or 15.0
-                        child: SizedBox(
-                          height: 60,
-                          width: 60,
-                          child: Image.network(
-                            'https://i.pinimg.com/736x/dd/56/f8/dd56f888c5abbdc8b429afa07131d418.jpg',
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Text(
-                        'Hào Chí',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      )
-                    ]),
+                    child: BlocBuilder<ProfileBloc, ProfileState>(
+                      builder: (context, state) {
+                        if (state is ProfileLoaded) {
+                          return AppBarWidget(
+                            name: state.profileModel.name ?? '',
+                            urlImg: state.profileModel.avatar ?? '',
+                          );
+                        } else if (state is ProfileLoading) {
+                          return LoadingTextShimmer(
+                            textStyle: TextStyle(fontSize: 30),
+                          );
+                        } else {
+                          return AppBarWidget();
+                        }
+                      },
+                    ),
                   ),
                 ),
               ],
