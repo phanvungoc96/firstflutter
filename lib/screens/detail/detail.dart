@@ -24,7 +24,7 @@ class _DetailPageState extends State<DetailPage> {
       backgroundColor: Colors.transparent,
       builder: (_) {
         return GestureDetector(
-          onTap: () => Navigator.of(ctx).pop(), // Closing the sheet.
+          onTap: () {}, // Closing the sheet.
           behavior: HitTestBehavior.opaque,
           child: LoginType(),
         );
