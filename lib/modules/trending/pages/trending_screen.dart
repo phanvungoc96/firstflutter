@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/modules/trending/blocs/news_trending_bloc.dart';
 import 'package:my_app/modules/trending/models/news_trending.dart';
 import 'package:my_app/utils/constants.dart';
@@ -6,26 +7,12 @@ import 'package:my_app/utils/extension.dart';
 import 'package:my_app/widgets/header/header.dart';
 
 import '../../../screens/detail/detail.dart';
-import '../../../screens/newsWidget/news_widget.dart';
 import '../widgets/item_news_leading.dart';
 
-class TrendingScreen extends StatefulWidget {
+class TrendingScreen extends StatelessWidget {
   static const routeName = '/trending';
 
   const TrendingScreen({Key? key}) : super(key: key);
-
-  @override
-  State<TrendingScreen> createState() => _TrendingScreenState();
-}
-
-class _TrendingScreenState extends State<TrendingScreen> {
-  final _newsTrendingBloc = NewsTrendingBLoc();
-
-  @override
-  void initState() {
-    super.initState();
-    _newsTrendingBloc.getNewsTrending();
-  }
 
   Widget newsTrending(String title, List<NewsTrending> listNewsTrending, BuildContext context) {
     return InkWell(
@@ -69,33 +56,30 @@ class _TrendingScreenState extends State<TrendingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<NewsTrendingBloc>().add(GetNewsTrending());
     return Scaffold(
       appBar: Header("Xu hướng"),
       backgroundColor: MyColor.lightGrey,
       body: SingleChildScrollView(
-        child: StreamBuilder<List<NewsTrending>?>(
-            stream: _newsTrendingBloc.newsTrendingStream,
-            builder: (context, snapshot) {
-              if (snapshot.data == null) {
-                return const SizedBox(
-                  child: Center(child: CircularProgressIndicator()),
-                );
-              }
-
-              if (snapshot.hasError) {
-                return const SizedBox(child: Center(child: Text('Something went wrong')));
-              }
-
-              return Column(
-                children: [
-                  newsTrending("Đang được quan tâm", snapshot.data!, context),
-                  SizedBox(height: 10),
-                  newsTrending("Nóng 24H", snapshot.data!, context),
-                  SizedBox(height: 10),
-                  newsTrending("Góc nhìn và phân tích", snapshot.data!, context),
-                ],
-              );
-            }),
+        child: BlocBuilder<NewsTrendingBloc, NewsTrendingState>(
+          builder: (context, state) {
+            if (state is NewsTrendingLoading) {
+              return const SizedBox(child: Center(child: CircularProgressIndicator()));
+            } else if (state is NewsTrendingEmpty) {
+              return SizedBox(child: Center(child: Text(state.msg)));
+            } else if (state is NewsTrendingLoaded) {
+              return Column(children: [
+                newsTrending("Đang được quan tâm", state.newsTrendingList, context),
+                SizedBox(height: 10),
+                newsTrending("Nóng 24H", state.newsTrendingList, context),
+                SizedBox(height: 10),
+                newsTrending("Góc nhìn và phân tích", state.newsTrendingList, context),
+              ]);
+            } else {
+              return SizedBox(child: Center(child: Text("có lỗi xảy ra")));
+            }
+          },
+        ),
       ),
     );
   }

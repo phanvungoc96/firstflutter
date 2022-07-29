@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:my_app/bloc/news/news_bloc.dart';
 import 'package:my_app/bloc/profile/profile_bloc.dart';
+import 'package:my_app/modules/trending/blocs/news_trending_bloc.dart';
 import 'package:my_app/screens/category/category_screen.dart';
 import 'package:my_app/screens/detail/detail.dart';
 import 'package:my_app/screens/newsWidget/news_widget.dart';
@@ -9,6 +11,7 @@ import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/search/search.dart';
 import 'package:my_app/screens/suggest_follow/suggest.dart';
 import 'package:my_app/screens/tabScreens.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'modules/trending/pages/trending_screen.dart';
 
@@ -50,10 +53,13 @@ class ThemeCubit extends Cubit<ThemeData> {
   }
 }
 
-void main() {
-  BlocOverrides.runZoned(
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
+  HydratedBlocOverrides.runZoned(
     () => runApp(const MyApp()),
     blocObserver: AppBlocObserver(),
+    storage: storage,
   );
 }
 
@@ -66,10 +72,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<ProfileBloc>(
-          create: (_) => ProfileBloc(),
-        ),
+        BlocProvider<ProfileBloc>(create: (_) => ProfileBloc()),
         BlocProvider<NewsBloc>(create: (_) => NewsBloc()),
+        BlocProvider(create: (_) => NewsTrendingBloc()),
         BlocProvider(create: (_) => ThemeCubit()),
       ],
       child: MaterialApp(

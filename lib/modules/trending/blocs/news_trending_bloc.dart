@@ -1,30 +1,29 @@
-import 'dart:async';
-import 'package:rxdart/rxdart.dart';
-import '../models/news_trending.dart';
-import '../repos/list_news_repo.dart';
+import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
+import 'package:my_app/modules/trending/models/news_trending.dart';
+import '../../../networks/news_trending_request.dart';
 
-abstract class BlocBase {
-  void dispose();
-}
+part 'news_trending_event.dart';
+part 'news_trending_state.dart';
 
-class NewsTrendingBLoc extends BlocBase {
-  final _newsTrendingCtrl = BehaviorSubject<List<NewsTrending>?>();
-
-  Stream<List<NewsTrending>?> get newsTrendingStream => _newsTrendingCtrl.stream;
-
-  Future<void> getNewsTrending() async {
-    try {
-      final res = await ListNewsTrendingRepo().getNewsTrending();
-      if (res != null) {
-        _newsTrendingCtrl.sink.add(res);
+class NewsTrendingBloc extends Bloc<NewsTrendingEvent, NewsTrendingState> {
+  NewsTrendingBloc() : super(NewsTrendingInitial()) {
+    on<NewsTrendingEvent>((event, emit) async {
+      if (event is GetNewsTrending) {
+        try {
+          emit(NewsTrendingLoading());
+          List<NewsTrending> data = await NewsTrendingRequest.getNewsTrending();
+          print(data);
+          if (data.isNotEmpty) {
+            emit(NewsTrendingLoaded(data));
+          } else {
+            emit(NewsTrendingEmpty("Chưa có bảng tin nào hôm nay!"));
+          }
+        } catch (e) {
+          emit(NewsTrendingError("Có lỗi xảy ra bloc"));
+        }
       }
-    } catch (e) {
-      _newsTrendingCtrl.sink.addError('Cannot fetch list posts right now!!!');
-    }
-  }
-
-  @override
-  void dispose() {
-    _newsTrendingCtrl.close();
+    });
   }
 }
