@@ -14,7 +14,7 @@ class NewsTrending {
   final String? newsType;
 
   @JsonKey(name: 'hours', includeIfNull: false)
-  final String? hours;
+  final int? hours;
 
   NewsTrending({
     this.title,

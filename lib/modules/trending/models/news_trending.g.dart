@@ -10,7 +10,7 @@ NewsTrending _$NewsTrendingFromJson(Map<String, dynamic> json) => NewsTrending(
       title: json['title'] as String?,
       imgUrl: json['img_url'] as String?,
       newsType: json['news_type'] as String?,
-      hours: json['hours'] as String?,
+      hours: json['hours'] as int?,
     );
 
 Map<String, dynamic> _$NewsTrendingToJson(NewsTrending instance) {

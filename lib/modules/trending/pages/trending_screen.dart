@@ -6,13 +6,33 @@ import 'package:my_app/utils/constants.dart';
 import 'package:my_app/utils/extension.dart';
 import 'package:my_app/widgets/header/header.dart';
 
+import '../../../networks/news_trending_request.dart';
 import '../../../screens/detail/detail.dart';
 import '../widgets/item_news_leading.dart';
 
-class TrendingScreen extends StatelessWidget {
+class TrendingScreen extends StatefulWidget {
   static const routeName = '/trending';
 
   const TrendingScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TrendingScreen> createState() => _TrendingScreenState();
+}
+
+class _TrendingScreenState extends State<TrendingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
+  }
+
+  double getH(BuildContext context) {
+    return MediaQuery.of(context).size.height;
+  }
+
+  double getW(BuildContext context) {
+    return MediaQuery.of(context).size.width;
+  }
 
   Widget newsTrending(String title, List<NewsTrending> listNewsTrending, BuildContext context) {
     return InkWell(
@@ -56,7 +76,6 @@ class TrendingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<NewsTrendingBloc>().add(GetNewsTrending());
     return Scaffold(
       appBar: Header("Xu hướng"),
       backgroundColor: MyColor.lightGrey,
@@ -64,9 +83,17 @@ class TrendingScreen extends StatelessWidget {
         child: BlocBuilder<NewsTrendingBloc, NewsTrendingState>(
           builder: (context, state) {
             if (state is NewsTrendingLoading) {
-              return const SizedBox(child: Center(child: CircularProgressIndicator()));
+              return SizedBox(
+                width: getW(context),
+                height: getH(context),
+                child: Center(child: CircularProgressIndicator()),
+              );
             } else if (state is NewsTrendingEmpty) {
-              return SizedBox(child: Center(child: Text(state.msg)));
+              return SizedBox(
+                width: getW(context),
+                height: getH(context),
+                child: Center(child: Text(state.msg)),
+              );
             } else if (state is NewsTrendingLoaded) {
               return Column(children: [
                 newsTrending("Đang được quan tâm", state.newsTrendingList, context),
@@ -76,7 +103,11 @@ class TrendingScreen extends StatelessWidget {
                 newsTrending("Góc nhìn và phân tích", state.newsTrendingList, context),
               ]);
             } else {
-              return SizedBox(child: Center(child: Text("có lỗi xảy ra")));
+              return SizedBox(
+                width: getW(context),
+                height: getH(context),
+                child: Center(child: Text("có lỗi xảy ra, thử lại sau!")),
+              );
             }
           },
         ),
