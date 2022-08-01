@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-import 'package:my_app/bloc/news/news_bloc.dart';
-import 'package:my_app/bloc/profile/profile_bloc.dart';
+import 'package:my_app/blocs/news/news_bloc.dart';
+import 'package:my_app/blocs/profile/profile_bloc.dart';
 import 'package:my_app/modules/trending/blocs/news_trending_bloc.dart';
 import 'package:my_app/screens/category/category_screen.dart';
 import 'package:my_app/screens/detail/detail.dart';
@@ -55,7 +55,8 @@ class ThemeCubit extends Cubit<ThemeData> {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  final storage = await HydratedStorage.build(storageDirectory: await getApplicationDocumentsDirectory());
+  final storage = await HydratedStorage.build(
+      storageDirectory: await getApplicationDocumentsDirectory());
   HydratedBlocOverrides.runZoned(
     () => runApp(const MyApp()),
     blocObserver: AppBlocObserver(),

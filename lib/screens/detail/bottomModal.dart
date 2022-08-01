@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../bloc/profile/profile_bloc.dart';
+import '../../blocs/profile/profile_bloc.dart';
 
 class LoginType extends StatelessWidget {
   final titleController = TextEditingController();

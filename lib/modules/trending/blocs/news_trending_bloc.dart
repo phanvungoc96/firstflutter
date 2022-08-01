@@ -15,7 +15,8 @@ class NewsTrendingBloc extends Bloc<NewsTrendingEvent, NewsTrendingState> {
       if (event is GetNewsTrending) {
         try {
           emit(NewsTrendingLoading());
-          List<NewsTrending> data = await NewsTrendingRepo.instance.getNewsTrending();
+          List<NewsTrending> data =
+              await NewsTrendingRepo.instance.getNewsTrending();
           // List<NewsTrending> data = [
           //   NewsTrending(
           //       newsType: "Thời sự",

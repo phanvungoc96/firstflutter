@@ -34,7 +34,8 @@ class _TrendingScreenState extends State<TrendingScreen> {
     return MediaQuery.of(context).size.width;
   }
 
-  Widget newsTrending(String title, List<NewsTrending> listNewsTrending, BuildContext context) {
+  Widget newsTrending(
+      String title, List<NewsTrending> listNewsTrending, BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.pushNamed(context, DetailPage.routeName);
@@ -96,11 +97,13 @@ class _TrendingScreenState extends State<TrendingScreen> {
               );
             } else if (state is NewsTrendingLoaded) {
               return Column(children: [
-                newsTrending("Đang được quan tâm", state.newsTrendingList, context),
+                newsTrending(
+                    "Đang được quan tâm", state.newsTrendingList, context),
                 SizedBox(height: 10),
                 newsTrending("Nóng 24H", state.newsTrendingList, context),
                 SizedBox(height: 10),
-                newsTrending("Góc nhìn và phân tích", state.newsTrendingList, context),
+                newsTrending(
+                    "Góc nhìn và phân tích", state.newsTrendingList, context),
               ]);
             } else {
               return SizedBox(
