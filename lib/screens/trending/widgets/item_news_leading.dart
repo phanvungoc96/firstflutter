@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_app/utils/extension.dart';
 import '../../../utils/constants.dart';
-import '../models/news_trending.dart';
+import '../../../models/trending/news_trending.dart';
 
 class ItemNewsLeading extends StatelessWidget {
   final NewsTrending newsTrending;

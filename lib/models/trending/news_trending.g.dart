@@ -1,10 +1,10 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'news_trending.dart';
-
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
+
+part of './news_trending.dart';
 
 NewsTrending _$NewsTrendingFromJson(Map<String, dynamic> json) => NewsTrending(
       title: json['title'] as String?,

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
-import 'package:my_app/modules/trending/models/news_trending.dart';
+import 'package:my_app/models/trending/news_trending.dart';
 
 class NewsTrendingRequest {
   final String urlNewsTrending = "https://62da21679eedb699636737fb.mockapi.io/news/NewsCard";

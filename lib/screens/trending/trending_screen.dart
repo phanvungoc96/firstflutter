@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/modules/trending/blocs/news_trending_bloc.dart';
-import 'package:my_app/modules/trending/models/news_trending.dart';
+import 'package:my_app/bloc/trending/news_trending_bloc.dart';
+import 'package:my_app/models/trending/news_trending.dart';
 import 'package:my_app/utils/constants.dart';
 import 'package:my_app/utils/extension.dart';
 import 'package:my_app/widgets/header/header.dart';
 
-import '../../../networks/news_trending_request.dart';
-import '../../../screens/detail/detail.dart';
-import '../widgets/item_news_leading.dart';
+import '../detail/detail.dart';
+import 'widgets/item_news_leading.dart';
 
 class TrendingScreen extends StatefulWidget {
   static const routeName = '/trending';

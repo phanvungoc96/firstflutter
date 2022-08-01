@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/videos/videoTab.dart';
 
-import '../modules/trending/pages/trending_screen.dart';
+import 'trending/trending_screen.dart';
 import './newsWidget/news_widget.dart';
 import './category/category_screen.dart';
 

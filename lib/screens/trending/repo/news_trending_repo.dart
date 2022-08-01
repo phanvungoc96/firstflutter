@@ -1,5 +1,4 @@
-import 'dart:convert';
-import 'package:my_app/modules/trending/models/news_trending.dart';
+import 'package:my_app/models/trending/news_trending.dart';
 import '../../../networks/news_trending_request.dart';
 
 const assetKey = 'assets/news.json';
