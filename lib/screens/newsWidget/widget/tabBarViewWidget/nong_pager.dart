@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/bloc/news/news_bloc.dart';
+import 'package:my_app/blocs/news/news_bloc.dart';
 import 'package:my_app/widgets/loading_text_shimmer/loading_text_shimmer.dart';
 
 import '../../../../widgets/news_card.dart';

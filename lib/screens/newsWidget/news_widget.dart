@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/bloc/profile/profile_bloc.dart';
+import 'package:my_app/blocs/profile/profile_bloc.dart';
 import 'package:my_app/screens/newsWidget/widget/tabBarViewWidget/theo_doi_pager.dart';
 import 'package:my_app/utils/constants.dart';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:my_app/bloc/profile/profile_bloc.dart';
+import 'package:my_app/blocs/profile/profile_bloc.dart';
 import 'package:my_app/screens/newsWidget/widget/follow_widget.dart';
 import 'package:my_app/widgets/loading_text_shimmer/loading_text_shimmer.dart';
 
