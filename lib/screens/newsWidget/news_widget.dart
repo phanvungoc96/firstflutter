@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:my_app/blocs/profile/profile_bloc.dart';
+import 'package:my_app/screens/map/user_map.dart';
 import 'package:my_app/screens/newsWidget/widget/tabBarViewWidget/theo_doi_pager.dart';
 import 'package:my_app/utils/constants.dart';
 
@@ -89,6 +90,12 @@ class News extends StatelessWidget {
                 },
                 icon: const Icon(Icons.search),
               ),
+              IconButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, UserMap.routeName);
+                },
+                icon: const Icon(Icons.location_on_outlined),
+              ),
               BlocBuilder<ProfileBloc, ProfileState>(
                 builder: (context, state) {
                   return IconButton(
@@ -98,16 +105,14 @@ class News extends StatelessWidget {
                       icon: state is ProfileLoaded
                           ? ClipRRect(
                               borderRadius: BorderRadius.circular(100),
-                              child: Image.network(
-                                  state.profileModel.avatar ?? ''),
+                              child: Image.network(state.profileModel.avatar ?? ''),
                             )
                           : Icon(Icons.person));
                 },
               )
             ],
             flexibleSpace: Container(
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(colors: MyColor.colorHeader)),
+              decoration: const BoxDecoration(gradient: LinearGradient(colors: MyColor.colorHeader)),
             ),
           ),
         ),

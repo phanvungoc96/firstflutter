@@ -27,3 +27,14 @@ class MyShape {
   static BorderRadius radius_5 = BorderRadius.circular(5.0);
   static BorderRadius radius_8 = BorderRadius.circular(8.0);
 }
+
+class MyShadow {
+  static List<BoxShadow> shadow = [
+    BoxShadow(
+      color: Colors.grey.withOpacity(0.5),
+      spreadRadius: 5,
+      blurRadius: 7,
+      offset: Offset(0, 3), // changes position of shadow
+    )
+  ];
+}

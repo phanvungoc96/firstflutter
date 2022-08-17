@@ -5,6 +5,7 @@ import 'package:my_app/blocs/news/news_bloc.dart';
 import 'package:my_app/blocs/profile/profile_bloc.dart';
 import 'package:my_app/screens/category/category_screen.dart';
 import 'package:my_app/screens/detail/detail.dart';
+import 'package:my_app/screens/map/user_map.dart';
 import 'package:my_app/screens/newsWidget/news_widget.dart';
 import 'package:my_app/screens/profile/profile.dart';
 import 'package:my_app/screens/search/search.dart';
@@ -92,7 +93,8 @@ class MyApp extends StatelessWidget {
           News.routeName: (ctx) => News(),
           Search.routeName: (ctx) => Search(),
           Profile.routeName: (ctx) => Profile(),
-          SuggestFollow.routeName: (ctx) => SuggestFollow()
+          SuggestFollow.routeName: (ctx) => SuggestFollow(),
+          UserMap.routeName: (ctx) => UserMap()
         },
         onGenerateRoute: (settings) {
           print(settings.arguments);
