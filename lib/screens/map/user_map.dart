@@ -47,6 +47,7 @@ class _UserMapState extends State<UserMap> {
      myMarker in treeWidget with globalKey to custom marker
      */
     return Future.delayed(const Duration(milliseconds: 1500), () async {
+      print("TEST");
       final icon = await MarkerIcon.widgetToIcon(globalKey);
       setState(() {
         marker = Marker(
@@ -284,7 +285,7 @@ class _UserMapState extends State<UserMap> {
       child: Scaffold(
           body: Stack(
             children: [
-              MyMarker(globalKey),
+              Positioned(top: -1000, right: -1000, child: MyMarker(globalKey)),
               GoogleMap(
                 mapType: MapType.normal,
                 markers: marker == null ? <Marker>{} : <Marker>{marker!},
