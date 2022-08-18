@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:custom_info_window/custom_info_window.dart';
+import 'package:custom_marker/marker_icon.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_app/models/place_address/place_address.dart';
+import 'package:my_app/screens/map/widget/my-marker.dart';
 import 'package:my_app/utils/extension.dart';
 import 'package:my_app/utils/location.dart';
 
@@ -26,25 +28,37 @@ class _UserMapState extends State<UserMap> {
   final _searchPlaceController = TextEditingController();
   final PlaceAddressRequest apiRequest = PlaceAddressRequest();
   CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  final GlobalKey globalKey = GlobalKey();
 
   late List<PlaceAddress> dataSearched;
-  late Marker marker;
+  Marker? marker;
 
   @override
   void initState() {
     super.initState();
     dataSearched = [];
     _searchPlaceController.text = "";
-    marker = Marker(
-        markerId: MarkerId("Nichietsu"),
-        position: UserMap.latLngNIC,
-        // infoWindow: InfoWindow(
-        //   title: "Nichietsu",
-        //   snippet: "Vị trí công ty Nichietsu",
-        // ),
-        onTap: () {
-          _customInfoWindowController.addInfoWindow!(buildInfoWindow(), UserMap.latLngNIC);
-        });
+    initMarkerDefault();
+  }
+
+  Future<void> initMarkerDefault() {
+    /*
+     it's have to wait 2second for treeWidget is rendered and get
+     myMarker in treeWidget with globalKey to custom marker
+     */
+    return Future.delayed(const Duration(milliseconds: 1500), () async {
+      final icon = await MarkerIcon.widgetToIcon(globalKey);
+      setState(() {
+        marker = Marker(
+          markerId: MarkerId("Nichietsu"),
+          position: UserMap.latLngNIC,
+          icon: icon,
+          onTap: () {
+            _customInfoWindowController.addInfoWindow!(buildInfoWindow(), UserMap.latLngNIC);
+          },
+        );
+      });
+    });
   }
 
   Container buildInfoWindow() {
@@ -108,10 +122,11 @@ class _UserMapState extends State<UserMap> {
       final latLngUser = LatLng(userPosition.latitude!, userPosition.longitude!);
       CameraPosition cameraUser = CameraPosition(target: latLngUser, zoom: 16);
       controller.animateCamera(CameraUpdate.newCameraPosition(cameraUser));
-
+      final icon = await MarkerIcon.widgetToIcon(globalKey);
       setState(() {
         marker = Marker(
           markerId: MarkerId("Vị trí của tôi"),
+          icon: icon,
           position: latLngUser,
           infoWindow: InfoWindow(
             title: "Vị trí của tôi",
@@ -269,9 +284,10 @@ class _UserMapState extends State<UserMap> {
       child: Scaffold(
           body: Stack(
             children: [
+              MyMarker(globalKey),
               GoogleMap(
                 mapType: MapType.normal,
-                markers: <Marker>{marker},
+                markers: marker == null ? <Marker>{} : <Marker>{marker!},
                 initialCameraPosition: widget.cameraNIC,
                 onTap: (position) {
                   _customInfoWindowController.hideInfoWindow!();
