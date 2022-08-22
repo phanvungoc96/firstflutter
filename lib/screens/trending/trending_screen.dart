@@ -4,9 +4,7 @@ import 'package:my_app/models/trending/news_trending.dart';
 import 'package:my_app/utils/constants.dart';
 import 'package:my_app/utils/extension.dart';
 import 'package:my_app/widgets/header/header.dart';
-
 import '../../blocs/trending/news_trending_bloc.dart';
-import '../detail/detail.dart';
 import 'widgets/item_news_leading.dart';
 
 class TrendingScreen extends StatefulWidget {
@@ -19,10 +17,24 @@ class TrendingScreen extends StatefulWidget {
 }
 
 class _TrendingScreenState extends State<TrendingScreen> {
+  final _controller = ScrollController();
+  List<NewsTrending> _currentNewsTrending = [];
+
   @override
   void initState() {
     super.initState();
     BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
+    _controller.addListener(() {
+      if (_controller.offset == _controller.position.maxScrollExtent) {
+        BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
   }
 
   double getH(BuildContext context) {
@@ -33,44 +45,33 @@ class _TrendingScreenState extends State<TrendingScreen> {
     return MediaQuery.of(context).size.width;
   }
 
-  Widget newsTrending(String title, List<NewsTrending> listNewsTrending, BuildContext context) {
-    return InkWell(
-      onTap: () {
-        Navigator.pushNamed(context, DetailPage.routeName);
-      },
-      child: Container(
-        color: Colors.white,
-        padding: EdgeInsets.all(10),
-        child: Column(
-          children: [
-            buildTitle(title),
-            SizedBox(height: 10),
-            ...buildListItem(listNewsTrending),
-          ],
-        ),
+  SizedBox showMsg(BuildContext context, String msg) {
+    return SizedBox(
+      width: getW(context),
+      height: getH(context),
+      child: Center(child: Text(msg)),
+    );
+  }
+
+  SizedBox showLoading(BuildContext context) {
+    return SizedBox(
+      width: getW(context),
+      height: getH(context),
+      child: Center(child: CircularProgressIndicator()),
+    );
+  }
+
+  Widget buildTitle(String title) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+      child: Row(
+        children: [
+          const Icon(Icons.trending_up, color: MyColor.primary),
+          SizedBox(width: 5),
+          Text(title.toUpperCase()).medium(MyColor.primary),
+        ],
       ),
     );
-  }
-
-  Row buildTitle(String title) {
-    return Row(
-      children: [
-        const Icon(Icons.trending_up, color: MyColor.primary),
-        SizedBox(width: 5),
-        Text(title.toUpperCase()).medium(MyColor.primary),
-      ],
-    );
-  }
-
-  List<Widget> buildListItem(List<NewsTrending> newsTrending) {
-    List<Widget> content = [];
-
-    newsTrending.asMap().forEach((index, item) => {
-          content.add(ItemNewsLeading(item)),
-          content.add(Divider(thickness: 1, color: Colors.black12)),
-        });
-    content.add(const Text("Đọc thêm").small(Colors.black));
-    return content;
   }
 
   @override
@@ -78,38 +79,42 @@ class _TrendingScreenState extends State<TrendingScreen> {
     return Scaffold(
       appBar: Header("Xu hướng"),
       backgroundColor: MyColor.lightGrey,
-      body: SingleChildScrollView(
-        child: BlocBuilder<NewsTrendingBloc, NewsTrendingState>(
-          builder: (context, state) {
-            if (state is NewsTrendingLoading) {
-              return SizedBox(
-                width: getW(context),
-                height: getH(context),
-                child: Center(child: CircularProgressIndicator()),
-              );
-            } else if (state is NewsTrendingEmpty) {
-              return SizedBox(
-                width: getW(context),
-                height: getH(context),
-                child: Center(child: Text(state.msg)),
-              );
-            } else if (state is NewsTrendingLoaded) {
-              return Column(children: [
-                newsTrending("Đang được quan tâm", state.newsTrendingList, context),
-                SizedBox(height: 10),
-                newsTrending("Nóng 24H", state.newsTrendingList, context),
-                SizedBox(height: 10),
-                newsTrending("Góc nhìn và phân tích", state.newsTrendingList, context),
-              ]);
-            } else {
-              return SizedBox(
-                width: getW(context),
-                height: getH(context),
-                child: Center(child: Text("có lỗi xảy ra, thử lại sau!")),
-              );
-            }
-          },
-        ),
+      body: BlocBuilder<NewsTrendingBloc, NewsTrendingState>(
+        builder: (context, state) {
+          if (state is NewsTrendingLoading && _currentNewsTrending.isEmpty) {
+            return showLoading(context);
+          } else if (state is NewsTrendingEmpty && _currentNewsTrending.isEmpty) {
+            return showMsg(context, state.msg);
+          } else if (state is NewsTrendingLoaded) {
+            _currentNewsTrending.addAll(state.newsTrendingList);
+          } else if (state is NewsTrendingError && _currentNewsTrending.isEmpty) {
+            return showMsg(context, "có lỗi xảy ra, thử lại sau!");
+          }
+          final lastItemIndex = _currentNewsTrending.length - 1;
+          return Column(
+            children: [
+              buildTitle("Xu hướng tìm kiếm"),
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  controller: _controller,
+                  padding: const EdgeInsets.all(8),
+                  itemCount: _currentNewsTrending.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index >= lastItemIndex) {
+                      return Container(
+                        margin: EdgeInsets.only(top: 8),
+                        height: 50,
+                        child: Center(child: CircularProgressIndicator()),
+                      );
+                    }
+                    return ItemNewsLeading(_currentNewsTrending[index]);
+                  },
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

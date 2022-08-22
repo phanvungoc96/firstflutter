@@ -15,15 +15,7 @@ class NewsTrendingBloc extends Bloc<NewsTrendingEvent, NewsTrendingState> {
       if (event is GetNewsTrending) {
         try {
           emit(NewsTrendingLoading());
-          List<NewsTrending> data =
-              await NewsTrendingRepo.instance.getNewsTrending();
-          // List<NewsTrending> data = [
-          //   NewsTrending(
-          //       newsType: "Thời sự",
-          //       imgUrl: "https://image.vtc.vn/upload/2022/07/20/ngu-dan-mat-tich-12444591.jpg",
-          //       title: "Vụ ngư dân mất tích: Không thể đưa nạn nhân từ tàu cá sang tàu Cảnh sát biển",
-          //       hours: "23 giờ")
-          // ];
+          List<NewsTrending> data = await NewsTrendingRepo.instance.getNewsTrending();
           if (data.isNotEmpty) {
             emit(NewsTrendingLoaded(data));
           } else {
