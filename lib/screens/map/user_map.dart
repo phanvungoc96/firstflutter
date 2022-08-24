@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_app/models/place_address/place_address.dart';
 import 'package:my_app/screens/map/widget/my-marker.dart';
+import 'package:my_app/utils/dum_data.dart';
 import 'package:my_app/utils/extension.dart';
 import 'package:my_app/utils/location.dart';
 
@@ -31,7 +32,7 @@ class _UserMapState extends State<UserMap> {
   final GlobalKey globalKey = GlobalKey();
 
   late List<PlaceAddress> dataSearched;
-  Marker? marker;
+  Set<Marker> marker = {};
 
   @override
   void initState() {
@@ -47,17 +48,20 @@ class _UserMapState extends State<UserMap> {
      myMarker in treeWidget with globalKey to custom marker
      */
     return Future.delayed(const Duration(milliseconds: 1500), () async {
-      print("TEST");
       final icon = await MarkerIcon.widgetToIcon(globalKey);
-      setState(() {
-        marker = Marker(
-          markerId: MarkerId("Nichietsu"),
-          position: UserMap.latLngNIC,
+      final Set<Marker> listMarker = {};
+      latLngList.asMap().forEach((key, item) {
+        listMarker.add(Marker(
+          markerId: MarkerId("Nichietsu $key"),
+          position: item,
           icon: icon,
           onTap: () {
-            _customInfoWindowController.addInfoWindow!(buildInfoWindow(), UserMap.latLngNIC);
+            _customInfoWindowController.addInfoWindow!(buildInfoWindow(), item);
           },
-        );
+        ));
+      });
+      setState(() {
+        marker = listMarker;
       });
     });
   }
@@ -125,15 +129,18 @@ class _UserMapState extends State<UserMap> {
       controller.animateCamera(CameraUpdate.newCameraPosition(cameraUser));
       final icon = await MarkerIcon.widgetToIcon(globalKey);
       setState(() {
-        marker = Marker(
-          markerId: MarkerId("Vị trí của tôi"),
-          icon: icon,
-          position: latLngUser,
-          infoWindow: InfoWindow(
-            title: "Vị trí của tôi",
-            snippet: "Vị trí của tôi",
-          ),
-        );
+        marker = <Marker>{
+          ...marker,
+          Marker(
+            markerId: MarkerId("Vị trí của tôi"),
+            icon: icon,
+            position: latLngUser,
+            infoWindow: InfoWindow(
+              title: "Vị trí của tôi",
+              snippet: "Vị trí của tôi",
+            ),
+          )
+        };
       });
     } catch (e) {
       print(e);
@@ -146,14 +153,17 @@ class _UserMapState extends State<UserMap> {
     CameraPosition cameraUser = CameraPosition(target: latLngAddress, zoom: 16);
     controller.animateCamera(CameraUpdate.newCameraPosition(cameraUser));
     setState(() {
-      marker = Marker(
-        markerId: MarkerId(item.displayPlace!),
-        position: latLngAddress,
-        infoWindow: InfoWindow(
-          title: item.displayPlace!,
-          snippet: item.displayAddress!,
-        ),
-      );
+      marker = <Marker>{
+        ...marker,
+        Marker(
+          markerId: MarkerId(item.displayPlace!),
+          position: latLngAddress,
+          infoWindow: InfoWindow(
+            title: item.displayPlace!,
+            snippet: item.displayAddress!,
+          ),
+        )
+      };
       _searchPlaceController.text = item.displayAddress!;
       dataSearched = [];
     });
@@ -288,7 +298,7 @@ class _UserMapState extends State<UserMap> {
               Positioned(top: -1000, right: -1000, child: MyMarker(globalKey)),
               GoogleMap(
                 mapType: MapType.normal,
-                markers: marker == null ? <Marker>{} : <Marker>{marker!},
+                markers: marker,
                 initialCameraPosition: widget.cameraNIC,
                 onTap: (position) {
                   _customInfoWindowController.hideInfoWindow!();

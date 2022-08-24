@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart';
 import 'package:my_app/models/trending/news_trending.dart';
 import 'package:my_app/utils/constants.dart';
 import 'package:my_app/utils/extension.dart';
 import 'package:my_app/widgets/header/header.dart';
 import '../../blocs/trending/news_trending_bloc.dart';
 import 'widgets/item_news_leading.dart';
+import 'package:http/http.dart' as http;
 
 class TrendingScreen extends StatefulWidget {
   static const routeName = '/trending';
@@ -19,16 +21,25 @@ class TrendingScreen extends StatefulWidget {
 class _TrendingScreenState extends State<TrendingScreen> {
   final _controller = ScrollController();
   List<NewsTrending> _currentNewsTrending = [];
+  double _sumCapacity = 0;
 
   @override
   void initState() {
     super.initState();
+    print("get news");
     BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
     _controller.addListener(() {
+      print(_sumCapacity);
       if (_controller.offset == _controller.position.maxScrollExtent) {
         BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
       }
     });
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    BlocProvider.of<NewsTrendingBloc>(context).add(ClearNewsTrending());
   }
 
   @override
@@ -74,6 +85,13 @@ class _TrendingScreenState extends State<TrendingScreen> {
     );
   }
 
+  Future<void> calculateCapacity(String url, int index) async {
+    Response r = await http.head(Uri.parse(url));
+    final capacity = r.headers["content-length"];
+    _sumCapacity += double.parse(capacity!);
+    print("index - $index - $capacity - $_sumCapacity");
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,36 +100,48 @@ class _TrendingScreenState extends State<TrendingScreen> {
       body: BlocBuilder<NewsTrendingBloc, NewsTrendingState>(
         builder: (context, state) {
           if (state is NewsTrendingLoading && _currentNewsTrending.isEmpty) {
+            print(" loading: ${_currentNewsTrending.length}");
             return showLoading(context);
-          } else if (state is NewsTrendingEmpty && _currentNewsTrending.isEmpty) {
+          }
+          if (state is NewsTrendingEmpty && _currentNewsTrending.isEmpty) {
             return showMsg(context, state.msg);
-          } else if (state is NewsTrendingLoaded) {
+          }
+          if (state is NewsTrendingLoaded) {
+            print("loaded ${state.newsTrendingList.length}");
             _currentNewsTrending.addAll(state.newsTrendingList);
-          } else if (state is NewsTrendingError && _currentNewsTrending.isEmpty) {
+          }
+          if (state is NewsTrendingError && _currentNewsTrending.isEmpty) {
             return showMsg(context, "có lỗi xảy ra, thử lại sau!");
           }
           final lastItemIndex = _currentNewsTrending.length - 1;
           return Column(
             children: [
               buildTitle("Xu hướng tìm kiếm"),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  controller: _controller,
-                  padding: const EdgeInsets.all(8),
-                  itemCount: _currentNewsTrending.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    if (index >= lastItemIndex) {
-                      return Container(
-                        margin: EdgeInsets.only(top: 8),
-                        height: 50,
-                        child: Center(child: CircularProgressIndicator()),
-                      );
-                    }
-                    return ItemNewsLeading(_currentNewsTrending[index]);
-                  },
-                ),
-              ),
+              _currentNewsTrending.isEmpty
+                  ? SizedBox()
+                  : Expanded(
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        controller: _controller,
+                        padding: const EdgeInsets.all(8),
+                        itemCount: _currentNewsTrending.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          print("called itemBuilder");
+                          if (index >= lastItemIndex) {
+                            return Container(
+                              margin: EdgeInsets.only(top: 8),
+                              height: 50,
+                              child: Center(child: CircularProgressIndicator()),
+                            );
+                          }
+                          // if (_controller.position.userScrollDirection == ScrollDirection.reverse) {
+                          //   print("down");
+                          calculateCapacity(_currentNewsTrending[index].imgUrl ?? "", index);
+                          // }
+                          return ItemNewsLeading(_currentNewsTrending[index]);
+                        },
+                      ),
+                    ),
             ],
           );
         },
