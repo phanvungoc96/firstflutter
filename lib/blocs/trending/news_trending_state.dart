@@ -20,7 +20,7 @@ class NewsTrendingLoaded extends NewsTrendingState {
   NewsTrendingLoaded(this.newsTrendingList);
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [...newsTrendingList];
 }
 
 class NewsTrendingEmpty extends NewsTrendingState {

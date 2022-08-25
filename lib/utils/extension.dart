@@ -23,6 +23,15 @@ extension TextExt on Text {
     return Text(data.toString(), style: GoogleFonts.lato(color: color, fontSize: 14));
   }
 
+  Text mediumLong(Color color, int? line) {
+    return Text(
+      data.toString(),
+      overflow: TextOverflow.ellipsis,
+      maxLines: line,
+      style: GoogleFonts.lato(color: color, fontSize: 14),
+    );
+  }
+
   Text bold(Color color) {
     return Text(data.toString(), style: GoogleFonts.lato(color: color, fontSize: 14, fontWeight: FontWeight.bold));
   }
