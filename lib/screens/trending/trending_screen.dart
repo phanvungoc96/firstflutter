@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:my_app/models/trending/news_trending.dart';
@@ -20,8 +21,10 @@ class TrendingScreen extends StatefulWidget {
 
 class _TrendingScreenState extends State<TrendingScreen> {
   final _controller = ScrollController();
+  int _capacityLimit = 550000; // 500kb
   List<NewsTrending> _currentNewsTrending = [];
-  double _sumCapacity = 0;
+  int _sumCapacity = 0;
+  Map<int, String> _itemsRendered = {};
 
   @override
   void initState() {
@@ -30,8 +33,14 @@ class _TrendingScreenState extends State<TrendingScreen> {
     BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
     _controller.addListener(() {
       print(_sumCapacity);
-      if (_controller.offset == _controller.position.maxScrollExtent) {
+      // detect when scroll to last position
+      // if (_controller.offset == _controller.position.maxScrollExtent) {
+      //   BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
+      // }
+      //detect when scroll down
+      if (_controller.position.userScrollDirection == ScrollDirection.reverse && _sumCapacity > _capacityLimit) {
         BlocProvider.of<NewsTrendingBloc>(context).add(GetNewsTrending());
+        _capacityLimit *= 2;
       }
     });
   }
@@ -86,10 +95,15 @@ class _TrendingScreenState extends State<TrendingScreen> {
   }
 
   Future<void> calculateCapacity(String url, int index) async {
-    Response r = await http.head(Uri.parse(url));
-    final capacity = r.headers["content-length"];
-    _sumCapacity += double.parse(capacity!);
-    print("index - $index - $capacity - $_sumCapacity");
+    if (!_itemsRendered.containsKey(index)) {
+      Response r = await http.head(Uri.parse(url));
+      final capacity = r.headers["content-length"];
+      _sumCapacity += int.parse(capacity!);
+      print("index - $index - capacity: $capacity - sumCapacity: $_sumCapacity");
+      // add index of Item as key into Map to check, if key(item) is
+      // exist(already sum capacity) -> not sum capacity
+      _itemsRendered[index] = index.toString();
+    }
   }
 
   @override
@@ -114,12 +128,11 @@ class _TrendingScreenState extends State<TrendingScreen> {
             return showMsg(context, "có lỗi xảy ra, thử lại sau!");
           }
           final lastItemIndex = _currentNewsTrending.length - 1;
-          return Column(
-            children: [
-              buildTitle("Xu hướng tìm kiếm"),
-              _currentNewsTrending.isEmpty
-                  ? SizedBox()
-                  : Expanded(
+          return _currentNewsTrending.isNotEmpty
+              ? Column(
+                  children: [
+                    buildTitle("Xu hướng tìm kiếm"),
+                    Expanded(
                       child: ListView.builder(
                         shrinkWrap: true,
                         controller: _controller,
@@ -134,16 +147,14 @@ class _TrendingScreenState extends State<TrendingScreen> {
                               child: Center(child: CircularProgressIndicator()),
                             );
                           }
-                          // if (_controller.position.userScrollDirection == ScrollDirection.reverse) {
-                          //   print("down");
                           calculateCapacity(_currentNewsTrending[index].imgUrl ?? "", index);
-                          // }
                           return ItemNewsLeading(_currentNewsTrending[index]);
                         },
                       ),
                     ),
-            ],
-          );
+                  ],
+                )
+              : SizedBox();
         },
       ),
     );
