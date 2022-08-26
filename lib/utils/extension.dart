@@ -7,15 +7,27 @@ extension Ex on double {
 
 extension TextExt on Text {
   //16
-  Text title(Color color, {int? line}) {
+  Text title(Color color, {int? line, FontWeight? fWeight, double? fSize}) {
     return line == null
-        ? Text(data.toString(), style: GoogleFonts.lato(color: color, fontSize: 16))
+        ? Text(
+            data.toString(),
+            style: GoogleFonts.lato(
+              color: color,
+              fontSize: fSize ?? 16,
+              fontWeight: fWeight,
+            ),
+          )
         : Text(
             data.toString(),
             style: GoogleFonts.lato(color: color, fontSize: 16),
             maxLines: line,
             overflow: TextOverflow.ellipsis,
           );
+  }
+
+  //16
+  Text large(Color color) {
+    return Text(data.toString(), style: GoogleFonts.lato(color: color, fontSize: 16));
   }
 
   //14

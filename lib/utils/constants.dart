@@ -8,6 +8,10 @@ class MyColor {
   static const Color green = Color.fromRGBO(0, 136, 134, 1);
   static const Color primary = Color.fromRGBO(0, 144, 153, 1);
   static const Color softPink = Color.fromRGBO(240, 98, 146, 1);
+  static const Color textGrey = Color.fromRGBO(154, 157, 162, 1);
+  static const Color blueButtonMap = Color.fromRGBO(137, 180, 248, 1);
+  static const Color borderButtonMap = Color.fromRGBO(88, 89, 93, 1);
+  static const Color bgBlack = Color.fromRGBO(32, 33, 37, 1);
   static const List<Color> colorHeader = [
     Color.fromRGBO(0, 144, 153, 1),
     Color.fromRGBO(0, 128, 163, 1),

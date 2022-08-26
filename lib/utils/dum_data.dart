@@ -1,9 +1,10 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:my_app/models/news_model.dart';
-
-import '../models/News.dart';
+import '../models/my_image.dart';
 import '../models/new_channel.dart';
 import '../models/category.dart';
+
+const logoNic =
+    "https://old-freec2-production.s3.amazonaws.com/companyThumbnail/company2406/w375/1577349146ae2de99dff3dce4ed2050393c9a2a4bd404e8559.";
 
 const List<Category> categoryList = [
   Category("Theo dõi", "https://photo-baomoi.bmcdn.me/w700_r1/2022_07_21_94_43230828/aee9fd3f227dcb23926c.jpg"),
@@ -67,4 +68,37 @@ const List<LatLng> latLngList = [
   LatLng(10.793063990412442, 106.7134240639749),
   LatLng(10.792210326801078, 106.70938465752273),
   LatLng(10.792600272201073, 106.7084673419923),
+];
+
+const List<MyImage> imagesNicMap = [
+  MyImage(["https://api-portal.nichietsuvn.com/storage/introductions/27122021/61c96cb8df8f3.png"], 1),
+  MyImage([
+    "https://aptech.fpt.edu.vn/wp-content/uploads/2021/04/11-01-20_pic6.jpeg",
+    "https://2030club.vn/wp-content/uploads/2022/02/hanh-trinh-tuan-xuan-2022-clbdn2030-3.jpg"
+  ], 2),
+  MyImage(["https://2030club.vn/wp-content/uploads/2022/05/111.png"], 1),
+  MyImage([
+    "https://aptech.fpt.edu.vn/wp-content/uploads/2021/04/11-01-20_pic6.jpeg",
+    "https://2030club.vn/wp-content/uploads/2022/02/hanh-trinh-tuan-xuan-2022-clbdn2030-3.jpg"
+  ], 2),
+  MyImage(["https://jobsgo.vn/media/img/employer/54744-cover-app.jpg"], 1),
+  MyImage([
+    "https://aptech.fpt.edu.vn/wp-content/uploads/2021/04/11-01-20_pic6.jpeg",
+    "https://2030club.vn/wp-content/uploads/2022/02/hanh-trinh-tuan-xuan-2022-clbdn2030-3.jpg"
+  ], 2),
+  MyImage(["https://api-portal.nichietsuvn.com/storage/introductions/27122021/61c96cb8df8f3.png"], 1),
+  MyImage([
+    "https://aptech.fpt.edu.vn/wp-content/uploads/2021/04/11-01-20_pic6.jpeg",
+    "https://2030club.vn/wp-content/uploads/2022/02/hanh-trinh-tuan-xuan-2022-clbdn2030-3.jpg"
+  ], 2),
+  MyImage(["https://2030club.vn/wp-content/uploads/2022/05/111.png", ""], 1),
+  MyImage([
+    "https://aptech.fpt.edu.vn/wp-content/uploads/2021/04/11-01-20_pic6.jpeg",
+    "https://2030club.vn/wp-content/uploads/2022/02/hanh-trinh-tuan-xuan-2022-clbdn2030-3.jpg"
+  ], 2),
+  MyImage(["https://2030club.vn/wp-content/uploads/2022/05/111.png", ""], 1),
+  MyImage([
+    "https://aptech.fpt.edu.vn/wp-content/uploads/2021/04/11-01-20_pic6.jpeg",
+    "https://2030club.vn/wp-content/uploads/2022/02/hanh-trinh-tuan-xuan-2022-clbdn2030-3.jpg"
+  ], 2),
 ];

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:my_app/models/place_address/place_address.dart';
+import 'package:my_app/screens/map/widget/location_info_detail.dart';
 import 'package:my_app/screens/map/widget/my-marker.dart';
 import 'package:my_app/utils/dum_data.dart';
 import 'package:my_app/utils/extension.dart';
@@ -12,6 +13,7 @@ import 'package:my_app/utils/location.dart';
 
 import '../../networks/place_address_request.dart';
 import '../../utils/constants.dart';
+import '../../widgets/header/header.dart';
 
 class UserMap extends StatefulWidget {
   const UserMap({Key? key}) : super(key: key);
@@ -28,7 +30,7 @@ class _UserMapState extends State<UserMap> {
   final Completer<GoogleMapController> _controller = Completer();
   final _searchPlaceController = TextEditingController();
   final PlaceAddressRequest apiRequest = PlaceAddressRequest();
-  CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
+  // CustomInfoWindowController _customInfoWindowController = CustomInfoWindowController();
   final GlobalKey globalKey = GlobalKey();
 
   late List<PlaceAddress> dataSearched;
@@ -40,6 +42,12 @@ class _UserMapState extends State<UserMap> {
     dataSearched = [];
     _searchPlaceController.text = "";
     initMarkerDefault();
+  }
+
+  @override
+  void dispose() {
+    // _customInfoWindowController.dispose();
+    super.dispose();
   }
 
   Future<void> initMarkerDefault() {
@@ -56,7 +64,8 @@ class _UserMapState extends State<UserMap> {
           position: item,
           icon: icon,
           onTap: () {
-            _customInfoWindowController.addInfoWindow!(buildInfoWindow(), item);
+            // _customInfoWindowController.addInfoWindow!(buildInfoWindow(), item);
+            showDetailLocation();
           },
         ));
       });
@@ -66,52 +75,65 @@ class _UserMapState extends State<UserMap> {
     });
   }
 
-  Container buildInfoWindow() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: MyShape.radius_8,
-        color: Colors.white,
-        boxShadow: MyShadow.shadow,
-      ),
-      child: Column(
-        children: [
-          Container(
-            width: 200,
-            height: 120,
-            decoration: BoxDecoration(
-              borderRadius: MyShape.radius_8,
-              image: DecorationImage(
-                image: NetworkImage(
-                  "https://api-portal.nichietsuvn.com/storage/introductions/27122021/61c96cb8df8f3.png",
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5),
-            child: Row(
-              children: const [
-                Expanded(child: Text("Nichietsu building")),
-                Text("5.0"),
-                Icon(Icons.star, color: Colors.yellow, size: 24),
-              ],
-            ),
-          ),
-          TextButton(
-            onPressed: () {},
-            child: const Text('Xem giá'),
-          ),
-        ],
-      ),
+  void showDetailLocation() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => LocationInfoDetail(),
     );
   }
 
-  @override
-  void dispose() {
-    _customInfoWindowController.dispose();
-    super.dispose();
+  IconButton buildIconLeft(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.arrow_back_rounded),
+      tooltip: 'Arrow Back',
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
   }
+
+  // Container buildInfoWindow() {
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: MyShape.radius_8,
+  //       color: Colors.white,
+  //       boxShadow: MyShadow.shadow,
+  //     ),
+  //     child: Column(
+  //       children: [
+  //         Container(
+  //           width: 200,
+  //           height: 120,
+  //           decoration: BoxDecoration(
+  //             borderRadius: MyShape.radius_8,
+  //             image: DecorationImage(
+  //               image: NetworkImage(
+  //                 "https://api-portal.nichietsuvn.com/storage/introductions/27122021/61c96cb8df8f3.png",
+  //               ),
+  //               fit: BoxFit.cover,
+  //             ),
+  //           ),
+  //         ),
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(horizontal: 5),
+  //           child: Row(
+  //             children: const [
+  //               Expanded(child: Text("Nichietsu building")),
+  //               Text("5.0"),
+  //               Icon(Icons.star, color: Colors.yellow, size: 24),
+  //             ],
+  //           ),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {},
+  //           child: const Text('Xem giá'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   void autoCompleteSearch(String value) async {
     final data = await apiRequest.getPlace(value);
@@ -293,6 +315,10 @@ class _UserMapState extends State<UserMap> {
     }
     return SafeArea(
       child: Scaffold(
+          appBar: Header(
+            "Bản đồ",
+            iconLeft: buildIconLeft(context),
+          ),
           body: Stack(
             children: [
               Positioned(top: -1000, right: -1000, child: MyMarker(globalKey)),
@@ -301,23 +327,23 @@ class _UserMapState extends State<UserMap> {
                 markers: marker,
                 initialCameraPosition: widget.cameraNIC,
                 onTap: (position) {
-                  _customInfoWindowController.hideInfoWindow!();
+                  // _customInfoWindowController.hideInfoWindow!();
                 },
                 onCameraMove: (position) {
-                  _customInfoWindowController.onCameraMove!();
+                  // _customInfoWindowController.onCameraMove!();
                 },
                 onMapCreated: (GoogleMapController controller) {
                   _controller.complete(controller);
-                  _customInfoWindowController.googleMapController = controller;
+                  // _customInfoWindowController.googleMapController = controller;
                 },
               ),
               buildSearchPlace(context),
-              CustomInfoWindow(
-                controller: _customInfoWindowController,
-                height: 200,
-                width: 200,
-                offset: 50,
-              ),
+              // CustomInfoWindow(
+              //   controller: _customInfoWindowController,
+              //   height: 200,
+              //   width: 200,
+              //   offset: 50,
+              // ),
             ],
           ),
           floatingActionButton: buildMoveMyLocationButton()),
